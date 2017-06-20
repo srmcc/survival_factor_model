@@ -1,0 +1,6 @@
+This is where you put the externally downloaded gold standard files.  See the documentation for more information.  Make sure they are named:
+
+tcga_lgg_nejmoa1402121_appendix_293.csv
+tcga_gbm_mm7_544.csv
+tcga_luad_nature13385-s2.csv
+tcga_lusc_data.file.S7.5.clinical.and.genomic.data.table.csv

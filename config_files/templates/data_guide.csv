@@ -1,0 +1,1 @@
+,file_location,datatype,b,sparserange,etime,CEN,Delta,CENtype0,X_0.csv,normal,,"[[False, False]]",,,,1,X_1.csv,multinom,3,"[[False, False]]",,,,2,X_2.csv,normal,,"[[False, False]]",,,,3,X_3.csv,binom,1,"[[False, False]]",,,,4,X_4.csv,binom,1,"[[False, False]]",,,,5,X_5.csv,normal,,"[[False, False]]",,,,6,survival.csv,survival,,,tE,TRUE,delta,cindIC
