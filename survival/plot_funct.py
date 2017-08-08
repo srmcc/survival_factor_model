@@ -103,7 +103,7 @@ def prettyplot(n_cv, i, survivalloc, analysis_directory, disease_type):
 	figv.tight_layout()
 	plt.savefig(analysis_directory+'cv_'+str(n_cv)+ '_results/cv_run'+str(i)+'/model_0_0/val/'+ disease_type+ '_EZ_given_x_grey_eventtime.pdf',
 	            bbox_inches='tight')
-	plt.savefig(analysis_directory+'cv_'+str(n_cv)+ '_results/cv_run'+str(i)+'/model_0_0/val/'+ disease_type+ '_EZ_given_x_grey_eventtime.eps', format=eps, dpi = 1200,
+	plt.savefig(analysis_directory+'cv_'+str(n_cv)+ '_results/cv_run'+str(i)+'/model_0_0/val/'+ disease_type+ '_EZ_given_x_grey_eventtime.eps', format='eps', dpi = 1200,
 	            bbox_inches='tight')
 
 
@@ -141,7 +141,7 @@ def prettyplot2(n_cv, i, survivalloc, colorvector, colorname, analysis_directory
 	#ax.legend()
 	fig.tight_layout()
 	plt.savefig(analysis_directory+'cv_'+str(n_cv)+ '_results/cv_run'+str(i)+'/model_0_0/learn/expected_values/'+disease_type+'_EZ_given_x_' + colorname + '.pdf', bbox_inches='tight')
-	plt.savefig(analysis_directory+'cv_'+str(n_cv)+ '_results/cv_run'+str(i)+'/model_0_0/learn/expected_values/'+disease_type+'_EZ_given_x_' + colorname + '.eps', format=eps, dpi=1200, bbox_inches='tight')
+	plt.savefig(analysis_directory+'cv_'+str(n_cv)+ '_results/cv_run'+str(i)+'/model_0_0/learn/expected_values/'+disease_type+'_EZ_given_x_' + colorname + '.eps', format='eps', dpi=1200, bbox_inches='tight')
 
 def prettyplot3(n_cv, i, survivalloc, colorcat, colorname, analysis_directory, disease_type):
 	cv_testsamples= pd.read_csv(analysis_directory + 'cv_'+str(n_cv)+ '_samples_splits/cv_sample_split_' +str(i)+'.csv', sep=',', index_col=0)
@@ -195,7 +195,7 @@ def prettyplot3(n_cv, i, survivalloc, colorcat, colorname, analysis_directory, d
 	# ax.set_title('Volume and percent change')
 	fig.tight_layout()
 	plt.savefig(analysis_directory+'cv_'+str(n_cv)+ '_results/cv_run'+str(i)+'/model_0_0/learn/expected_values/'+disease_type+'_EZ_given_x_' + colorname + '.pdf', bbox_inches='tight')
-	plt.savefig(analysis_directory+'cv_'+str(n_cv)+ '_results/cv_run'+str(i)+'/model_0_0/learn/expected_values/'+disease_type+'_EZ_given_x_' + colorname + '.eps', format=eps, dpi=1200, bbox_inches='tight')
+	plt.savefig(analysis_directory+'cv_'+str(n_cv)+ '_results/cv_run'+str(i)+'/model_0_0/learn/expected_values/'+disease_type+'_EZ_given_x_' + colorname + '.eps', format='eps', dpi=1200, bbox_inches='tight')
 
 
 def prettyplot_final(survivalloc, analysis_directory, disease_type):
@@ -431,7 +431,7 @@ def prettyplot3_final_sim(colorcat, colorname, root_directory, project_name, dis
 				# ax.set_title('Volume and percent change')
 				fig_v.tight_layout()
 				plt.savefig(analysis_directory+'final_fit_results/model_0_0/'+disease_type+ '_trueZ'+str(z1)+'_'+ str(z2) +'_'+ colorname + '_all.pdf', bbox_inches='tight')
-				plt.savefig(analysis_directory+'final_fit_results/model_0_0/'+disease_type+ '_trueZ'+str(z1)+'_'+ str(z2) +'_'+ colorname + '_all.eps', format=eps, dpi=1200, bbox_inches='tight')
+				plt.savefig(analysis_directory+'final_fit_results/model_0_0/'+disease_type+ '_trueZ'+str(z1)+'_'+ str(z2) +'_'+ colorname + '_all.eps', format='eps', dpi=1200, bbox_inches='tight')
 	del ax_v, fig_v, im_v, leg_v, names_v
 	survival_v = survival.loc[:, list(testsamples.values[:,0])] 
 	survival= survival.drop(list(testsamples.values[:,0]), axis=1)
@@ -496,7 +496,7 @@ def prettyplot3_final_sim(colorcat, colorname, root_directory, project_name, dis
 				# ax.set_title('Volume and percent change')
 				fig.tight_layout()
 				plt.savefig(analysis_directory+'final_fit_results/model_0_0/learn/expected_values/'+disease_type+'_EZ_given_x_'+str(z1)+'_'+ str(z2) +'_'+ colorname + '.pdf', bbox_inches='tight')
-				plt.savefig(analysis_directory+'final_fit_results/model_0_0/learn/expected_values/'+disease_type+'_EZ_given_x_'+str(z1)+'_'+ str(z2) +'_'+ colorname + '.eps', format=eps, dpi=1200, bbox_inches='tight')
+				plt.savefig(analysis_directory+'final_fit_results/model_0_0/learn/expected_values/'+disease_type+'_EZ_given_x_'+str(z1)+'_'+ str(z2) +'_'+ colorname + '.eps', format='eps', dpi=1200, bbox_inches='tight')
 	EZ_v = pd.read_csv(analysis_directory+ zloc_v, sep=",", index_col=0)
 	EZ_v.columns=survival_v.columns
 	#t= survival_v.iloc[0, :]
