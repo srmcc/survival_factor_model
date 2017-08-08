@@ -10,7 +10,7 @@ import pandas as pd
 import re
 
 
-def pipeline(root_directory, disease_type, gold_standard):
+def pipeline(root_directory, disease_type, gold_standard, plot_only=False):
 	# gold_standard = True
 	# gold_standard = False
 
@@ -76,98 +76,100 @@ def pipeline(root_directory, disease_type, gold_standard):
 		sim_frac=0
 		sim_type = 1
 
-	assert TOP_SEED < large
-	np.random.seed(TOP_SEED)
-	if disease_type not in ["LGG", "GBM", "LUAD", "LUSC"]:
-		MASTER_SEED_DG = np.random.random_integers(0,large)
+	if not plot_only:
+		assert TOP_SEED < large
+		np.random.seed(TOP_SEED)
+		if disease_type not in ["LGG", "GBM", "LUAD", "LUSC"]:
+			MASTER_SEED_DG = np.random.random_integers(0,large)
 
-	MASTER_SEED_CV = np.random.random_integers(0,large)
-	MASTER_SEED = np.random.random_integers(0,large)
+		MASTER_SEED_CV = np.random.random_integers(0,large)
+		MASTER_SEED = np.random.random_integers(0,large)
 
 
-	rscript_path = os.getenv('RSCRIPT_PATH', '/usr/bin/Rscript')
-	if disease_type in ["LGG", "GBM", "LUAD", "LUSC"]:
-		if os.listdir(data_directory+ 'not_in_use/') == []:
-			os.system(rscript_path + ' download_data.R '+ disease_type + ' ' + root_directory + project_name+ '/data/not_in_use/')
-
-	#must move in gold standard file to /data/not_in_use/
-	if gold_standard==True:
-		if os.path.exists( '../config_files/external_files/'+ gs_file_name):
-			os.system('cp ../config_files/external_files/'+ gs_file_name + ' ' + data_directory + 'not_in_use/')
-		else:
-			print('You need ../config_files/external_files/'+ gs_file_name + ' to run gold_standard = True.  quitting.')
-			return
-
-	if len(os.listdir(data_directory)) == 1:
+		rscript_path = os.getenv('RSCRIPT_PATH', '/usr/bin/Rscript')
 		if disease_type in ["LGG", "GBM", "LUAD", "LUSC"]:
-			clean_data.clean_data(disease_type, data_directory, gold_standard)
-		else:
-			if os.path.exists(param_analysis_directory):
-				dz, paramX, paramt, CEN=survival_funct_v1.load_params(param_analysis_directory)
-				survival_funct_v1.gen_data_to_csv(ntrain, ntest, dz, paramX, paramt, CEN, root_directory + project_name + '/', sim_frac, sim_type, MASTER_SEED_DG)
+			if os.listdir(data_directory+ 'not_in_use/') == []:
+				os.system(rscript_path + ' download_data.R '+ disease_type + ' ' + root_directory + project_name+ '/data/not_in_use/')
+
+		#must move in gold standard file to /data/not_in_use/
+		if gold_standard==True:
+			if os.path.exists( '../config_files/external_files/'+ gs_file_name):
+				os.system('cp ../config_files/external_files/'+ gs_file_name + ' ' + data_directory + 'not_in_use/')
 			else:
-				print('directory' + param_analysis_directory + 'does not exist.  need to run LGG or GBM first. quitting')
+				print('You need ../config_files/external_files/'+ gs_file_name + ' to run gold_standard = True.  quitting.')
 				return
 
-	os.system('cp -r ../config_files/'+ disease_type+ '/* '+ analysis_directory)
-	## put 5 spec files (or 4 if no gs), and sample splits into analysis directory.
-	n_cv=5
+		if len(os.listdir(data_directory)) == 1:
+			if disease_type in ["LGG", "GBM", "LUAD", "LUSC"]:
+				clean_data.clean_data(disease_type, data_directory, gold_standard)
+			else:
+				if os.path.exists(param_analysis_directory):
+					dz, paramX, paramt, CEN=survival_funct_v1.load_params(param_analysis_directory)
+					survival_funct_v1.gen_data_to_csv(ntrain, ntest, dz, paramX, paramt, CEN, root_directory + project_name + '/', sim_frac, sim_type, MASTER_SEED_DG)
+				else:
+					print('directory' + param_analysis_directory + 'does not exist.  need to run LGG or GBM first. quitting')
+					return
 
-	cox_funct.cross_val_cox(n_cv, data_directory, analysis_directory, False)
+		os.system('cp -r ../config_files/'+ disease_type+ '/* '+ analysis_directory)
+		## put 5 spec files (or 4 if no gs), and sample splits into analysis directory.
+		n_cv=5
 
-	if disease_type in ["LGG", "GBM", "LUAD", "LUSC"] and gold_standard == True:
-		cox_funct.cross_val_cox(n_cv, data_directory, analysis_directory, gold_standard)
+		cox_funct.cross_val_cox(n_cv, data_directory, analysis_directory, False)
 
-
-	t = time()
-	survival_funct_v1.cross_val_sfa(n_cv, data_directory, analysis_directory, MASTER_SEED_CV)
-	print(time() - t) / 60, 'min'
-
-	if disease_type in ["LGG", "GBM", "LUAD", "LUSC"] and gold_standard == True:
-		mod_sel = survival_funct_v1.gather_plot_cv_cindex(n_cv, analysis_directory, disease_type)
-	else:
-		mod_sel = survival_funct_v1.gather_plot_cv_cindex_sim(n_cv, analysis_directory, disease_type)
-
-
-	mod=survival_funct_v1.get_best(mod_sel.iloc[0:4, :])
-	print('best sfa mod', mod)
-	specs = pd.read_csv(analysis_directory + 'specs_cv.csv', delimiter=',', index_col=0)
-	dzrange_string = specs.loc[0, 'dzrange']
-	dzrange = eval(dzrange_string.replace(';', ','))
-	specs.loc[0, 'dzrange'] = '[' + str(dzrange[mod])+ ']'
-	specs.to_csv(analysis_directory + 'specs.csv', delimiter=',', index_col=0)
-	
-	mod_cox = survival_funct_v1.get_best(mod_sel.iloc[4:7, :])
-	print('best cox mod', mod_cox)
-	specs = pd.read_csv(analysis_directory + 'specs_cox_cv.csv', delimiter=',', index_col=0)
-	sparserange_string = specs.loc[0, 'sparserange']
-	sparserange = eval(sparserange_string.replace(';', ','))
-	specs.loc[0, 'sparserange'] = '[' + str(sparserange[mod_cox])+ ']'
-	specs.to_csv(analysis_directory + 'specs_cox.csv', delimiter=',', index_col=0)
-
-	means=np.mean(mod_sel, axis=1)
-	print(means)
-	stdvs= np.std(mod_sel, axis=1)
-	print(stdvs)
-
-	for model in range(3):
-		survival_funct_v1.getsparse_cox(n_cv, analysis_directory, model)
+		if disease_type in ["LGG", "GBM", "LUAD", "LUSC"] and gold_standard == True:
+			cox_funct.cross_val_cox(n_cv, data_directory, analysis_directory, gold_standard)
 
 
-	## first need to make sure specs are correct.
-	## final fits:
-	cox_funct.final_fit_cox(data_directory, analysis_directory, False)
-	if disease_type in ["LGG", "GBM", "LUAD", "LUSC"] and gold_standard == True:
-		cox_funct.final_fit_cox(data_directory, analysis_directory, gold_standard)
+		t = time()
+		survival_funct_v1.cross_val_sfa(n_cv, data_directory, analysis_directory, MASTER_SEED_CV)
+		print(time() - t) / 60, 'min'
 
-	t = time()
-	survival_funct_v1.final_fit_sfa(data_directory, analysis_directory, MASTER_SEED)
-	print(time() - t) / 60, 'min'
+		if disease_type in ["LGG", "GBM", "LUAD", "LUSC"] and gold_standard == True:
+			mod_sel = survival_funct_v1.gather_plot_cv_cindex(n_cv, analysis_directory, disease_type)
+		else:
+			mod_sel = survival_funct_v1.gather_plot_cv_cindex_sim(n_cv, analysis_directory, disease_type)
+
+
+		mod=survival_funct_v1.get_best(mod_sel.iloc[0:4, :])
+		print('best sfa mod', mod)
+		specs = pd.read_csv(analysis_directory + 'specs_cv.csv', delimiter=',', index_col=0)
+		dzrange_string = specs.loc[0, 'dzrange']
+		dzrange = eval(dzrange_string.replace(';', ','))
+		specs.loc[0, 'dzrange'] = '[' + str(dzrange[mod])+ ']'
+		specs.to_csv(analysis_directory + 'specs.csv', delimiter=',', index_col=0)
+		
+		mod_cox = survival_funct_v1.get_best(mod_sel.iloc[4:7, :])
+		print('best cox mod', mod_cox)
+		specs = pd.read_csv(analysis_directory + 'specs_cox_cv.csv', delimiter=',', index_col=0)
+		sparserange_string = specs.loc[0, 'sparserange']
+		sparserange = eval(sparserange_string.replace(';', ','))
+		specs.loc[0, 'sparserange'] = '[' + str(sparserange[mod_cox])+ ']'
+		specs.to_csv(analysis_directory + 'specs_cox.csv', delimiter=',', index_col=0)
+
+		means=np.mean(mod_sel, axis=1)
+		print(means)
+		stdvs= np.std(mod_sel, axis=1)
+		print(stdvs)
+
+		for model in range(3):
+			survival_funct_v1.getsparse_cox(n_cv, analysis_directory, model)
+
+
+		## first need to make sure specs are correct.
+		## final fits:
+		cox_funct.final_fit_cox(data_directory, analysis_directory, False)
+		if disease_type in ["LGG", "GBM", "LUAD", "LUSC"] and gold_standard == True:
+			cox_funct.final_fit_cox(data_directory, analysis_directory, gold_standard)
+
+		t = time()
+		survival_funct_v1.final_fit_sfa(data_directory, analysis_directory, MASTER_SEED)
+		print(time() - t) / 60, 'min'
 
 	if gold_standard:
 		data_guide_gs=pd.read_csv(data_directory + 'data_guide_gs.csv', sep=',')
 		survivalloc =data_directory+ data_guide_gs.loc[:, 'file_location'].values[-1]
 		i=0
+		n_cv=5
 		for filename in data_guide_gs.loc[:, 'file_location']:
 			gs= pd.read_csv(data_directory +filename, sep=',', index_col=0)
 			if re.search(r'age', filename) and not re.search(r'stage', filename):

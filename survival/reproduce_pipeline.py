@@ -8,13 +8,16 @@ import pipeline
 
 @click.option('--gold_standard', default= True, prompt='Do gold standard analysis?',
               help="True if [LGG, GBM, LUAD, LUSC] and if external files are downloaded, otherwise False")
+@click.option('--plot_only', default= False, prompt='Have you already run the analysis and only want to make plots?',
+              help="If you have already run the analysis and only want to remake plots, set plot_only=True")
 
-def call_pipeline(root_directory, disease_type, gold_standard):
+
+def call_pipeline(root_directory, disease_type, gold_standard, plot_only):
 	if gold_standard == 'True':
 		gold_standard = True
 	elif gold_standard =='False':
 		gold_standard = False
-	pipeline.pipeline(root_directory, disease_type, gold_standard)
+	pipeline.pipeline(root_directory, disease_type, gold_standard, plot_only)
 
 if __name__ == '__main__':
     call_pipeline()
