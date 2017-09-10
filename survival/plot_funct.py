@@ -53,7 +53,8 @@ def prettyplot(n_cv, i, survivalloc, analysis_directory, disease_type):
 	x = EZ.iloc[0, :]
 	y = EZ.iloc[1, :]
 	fig, ax = plt.subplots()
-	cm = plt.cm.get_cmap('Greys')
+	#cm = plt.cm.get_cmap('Greys')
+	cm = plt.cm.get_cmap('viridis')
 	markers = ['o', 'v']
 	vminn= np.min(t)
 	vmaxx=np.max(t) 
@@ -71,10 +72,14 @@ def prettyplot(n_cv, i, survivalloc, analysis_directory, disease_type):
 	# ax.set_title('Volume and percent change')
 	# ax.legend()
 	fig.tight_layout()
-	plt.savefig(analysis_directory+'cv_'+str(n_cv)+ '_results/cv_run'+str(i)+'/model_0_0/learn/expected_values/'+disease_type+ '_EZ_given_x_grey_eventtime.pdf',
-	            bbox_inches='tight')
+	# plt.savefig(analysis_directory+'cv_'+str(n_cv)+ '_results/cv_run'+str(i)+'/model_0_0/learn/expected_values/'+disease_type+ '_EZ_given_x_grey_eventtime.pdf',
+	#             bbox_inches='tight')
+	plt.savefig(analysis_directory+'cv_'+str(n_cv)+ '_results/cv_run'+str(i)+'/model_0_0/learn/expected_values/'+disease_type+ '_EZ_given_x_color_eventtime.pdf',
+				bbox_inches='tight')
 	plt.savefig(analysis_directory+'cv_'+str(n_cv)+ '_results/cv_run'+str(i)+'/model_0_0/learn/expected_values/'+disease_type+ '_EZ_given_x_grey_eventtime.eps', format='eps', dpi=1200,
 	            bbox_inches='tight')
+	# plt.savefig(analysis_directory+'cv_'+str(n_cv)+ '_results/cv_run'+str(i)+'/model_0_0/learn/expected_values/'+disease_type+ '_EZ_given_x_grey_eventtime.eps', format='eps', dpi=1200,
+ #            bbox_inches='tight')
 	ylim= ax.get_ylim()
 	xlim= ax.get_xlim()
 	## now coding on the validation set. scale is set by learning set, axis are set by learning set. 
@@ -123,7 +128,8 @@ def prettyplot2(n_cv, i, survivalloc, colorvector, colorname, analysis_directory
 	x = EZ.iloc[0, :]
 	y = EZ.iloc[1, :]
 	fig, ax = plt.subplots()
-	cm = plt.cm.get_cmap('Greys')
+	cm = plt.cm.get_cmap('viridis')
+	#cm = plt.cm.get_cmap('Greys')
 	markers = ['o', 'v']
 	vminn= np.min(colorvector)
 	vmaxx=np.max(colorvector) 
@@ -194,8 +200,10 @@ def prettyplot3(n_cv, i, survivalloc, colorcat, colorname, analysis_directory, d
 	#ax.arrow(0, 0, paramt[0][1][0][0][0], paramt[0][1][0][0][1], head_width=.3, head_length=.3, fc='k', ec='k')
 	# ax.set_title('Volume and percent change')
 	fig.tight_layout()
-	plt.savefig(analysis_directory+'cv_'+str(n_cv)+ '_results/cv_run'+str(i)+'/model_0_0/learn/expected_values/'+disease_type+'_EZ_given_x_' + colorname + '.pdf', bbox_inches='tight')
-	plt.savefig(analysis_directory+'cv_'+str(n_cv)+ '_results/cv_run'+str(i)+'/model_0_0/learn/expected_values/'+disease_type+'_EZ_given_x_' + colorname + '.eps', format='eps', dpi=1200, bbox_inches='tight')
+	# plt.savefig(analysis_directory+'cv_'+str(n_cv)+ '_results/cv_run'+str(i)+'/model_0_0/learn/expected_values/'+disease_type+'_EZ_given_x_' + colorname + '.pdf', bbox_inches='tight')
+	# plt.savefig(analysis_directory+'cv_'+str(n_cv)+ '_results/cv_run'+str(i)+'/model_0_0/learn/expected_values/'+disease_type+'_EZ_given_x_' + colorname + '.eps', format='eps', dpi=1200, bbox_inches='tight')
+	plt.savefig(analysis_directory+'cv_'+str(n_cv)+ '_results/cv_run'+str(i)+'/model_0_0/learn/expected_values/'+disease_type+'_EZ_given_x_' + colorname + '_color.pdf', bbox_inches='tight')
+	plt.savefig(analysis_directory+'cv_'+str(n_cv)+ '_results/cv_run'+str(i)+'/model_0_0/learn/expected_values/'+disease_type+'_EZ_given_x_' + colorname + '_color.eps', format='eps', dpi=1200, bbox_inches='tight')
 
 
 def prettyplot_final(survivalloc, analysis_directory, disease_type):
