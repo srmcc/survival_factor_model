@@ -84,7 +84,7 @@ def prettyplot(n_cv, i, survivalloc, analysis_directory, disease_type):
 	## now coding on the validation set. scale is set by learning set, axis are set by learning set. 
 	EZ_v = pd.read_csv(analysis_directory+ zloc_v, sep=",", index_col=0)
 	EZ_v.columns=survival_v.columns
-	t= survival_v.iloc[0, :]
+	t=np.log( survival_v.iloc[0, :]
 	delta= survival_v.iloc[1, :]
 	x = EZ_v.iloc[0, :]
 	y = EZ_v.iloc[1, :]
