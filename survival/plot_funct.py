@@ -92,6 +92,7 @@ def prettyplot(n_cv, i, survivalloc, analysis_directory, disease_type):
 	##remove this, makes it use different axes
 	vminn= np.min(t)
 	vmaxx=np.max(t) 
+	print(vmaxx, vminn)
 	for k, m in enumerate(markers):
 		if m== 'o':
 			j= (delta==1)
