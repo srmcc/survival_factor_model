@@ -54,7 +54,7 @@ def prettyplot(n_cv, i, survivalloc, analysis_directory, disease_type):
 	y = EZ.iloc[1, :]
 	fig, ax = plt.subplots()
 	#cm = plt.cm.get_cmap('Greys')
-	cm = plt.cm.get_cmap('plasma')
+	cm = plt.cm.get_cmap('winter')
 	markers = ['o', 'v']
 	vminn= np.min(t)
 	vmaxx=np.max(t) 
@@ -128,7 +128,7 @@ def prettyplot2(n_cv, i, survivalloc, colorvector, colorname, analysis_directory
 	x = EZ.iloc[0, :]
 	y = EZ.iloc[1, :]
 	fig, ax = plt.subplots()
-	cm = plt.cm.get_cmap('plasma')
+	cm = plt.cm.get_cmap('winter')
 	#cm = plt.cm.get_cmap('Greys')
 	markers = ['o', 'v']
 	vminn= np.min(colorvector)
