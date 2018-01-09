@@ -204,3 +204,7 @@ def pipeline(root_directory, disease_type, gold_standard, plot_only=False):
 			groups.to_csv(data_directory+'not_in_use/groups.csv',  delimiter=',')
 		plot_funct.prettyplot3_final_sim(plot_funct.make_categorical(groups.iloc[0, :]), 'subtype', root_directory, project_name, disease_type)
 
+	if disease_type in ["LGG", "GBM", "LUAD", "LUSC"] and gold_standard == True:
+		mod_sel = survival_funct_v1.gather_plot_cv_cindex(n_cv, analysis_directory, disease_type)
+	else:
+		mod_sel = survival_funct_v1.gather_plot_cv_cindex_sim(n_cv, analysis_directory, disease_type)
