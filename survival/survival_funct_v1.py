@@ -2327,17 +2327,17 @@ def gather_plot_cv_cindex(n_cv, analysis_directory, disease_type):
     ax.set_xlabel('model type')
     pl.xticks(range(1, mod_sel.shape[0]+1), mod_sel.index)
     if disease_type in ['LGG', 'LUAD']:
-        txt = matplotlib.offsetbox.TextArea("Model Type:\n0 - FA-ECPH-C "+r'$d_z =2$'+ "\n1 - FA-ECPH-C "+r'$d_z =3$'+ " \n2 - FA-ECPH-C "+r'$d_z =4$'+ " \n3 - FA-ECPH-C "+r'$d_z =5$'+ "\n4 - ECPH-C-L"+r'$_1 \gamma = 1e3$'+ "\n5 - ECPH-C-L"+r'$_1 \gamma=1e4$'+ "\n6 - ECPH-C-L"+r'$_1 \gamma =1e5$'+ "\n7 - ECPH-C Gold Standard")
+        txt = matplotlib.offsetbox.TextArea("Model Type:\n0 - FA-EPH-C "+r'$d_z =2$'+ "\n1 - FA-EPH-C "+r'$d_z =3$'+ " \n2 - FA-EPH-C "+r'$d_z =4$'+ " \n3 - FA-EPH-C "+r'$d_z =5$'+ "\n4 - EPH-C-L"+r'$_1 \gamma = 1e3$'+ "\n5 - EPH-C-L"+r'$_1 \gamma=1e4$'+ "\n6 - EPH-C-L"+r'$_1 \gamma =1e5$'+ "\n7 - EPH-C Gold Standard")
         box= a._legend_box
         box.get_children().append(txt)
         box.set_figure(box.figure)
     if disease_type =='LUSC':
-        txt = matplotlib.offsetbox.TextArea("Model Type:\n0 - FA-ECPH-C "+r'$d_z =2$'+ "\n1 - FA-ECPH-C "+r'$d_z =5$'+ " \n2 - FA-ECPH-C "+r'$d_z =10$'+ " \n3 - FA-ECPH-C "+r'$d_z =15$'+ "\n4 - ECPH-C-L"+r'$_1 \gamma = 1e3$'+ "\n5 - ECPH-C-L"+r'$_1 \gamma=1e4$'+ "\n6 - ECPH-C-L"+r'$_1 \gamma =1e5$'+ "\n7 - ECPH-C Gold Standard")
+        txt = matplotlib.offsetbox.TextArea("Model Type:\n0 - FA-EPH-C "+r'$d_z =2$'+ "\n1 - FA-EPH-C "+r'$d_z =5$'+ " \n2 - FA-EPH-C "+r'$d_z =10$'+ " \n3 - FA-EPH-C "+r'$d_z =15$'+ "\n4 - EPH-C-L"+r'$_1 \gamma = 1e3$'+ "\n5 - EPH-C-L"+r'$_1 \gamma=1e4$'+ "\n6 - EPH-C-L"+r'$_1 \gamma =1e5$'+ "\n7 - EPH-C Gold Standard")
         box= a._legend_box
         box.get_children().append(txt)
         box.set_figure(box.figure)
     if disease_type =='GBM':
-        txt = matplotlib.offsetbox.TextArea("Model Type:\n0 - FA-ECPH-C "+r'$d_z =2$'+ "\n1 - FA-ECPH-C "+r'$d_z =3$'+ "\n2 - FA-ECPH-C "+r'$d_z =4$'+ "\n3 - FA-ECPH-C "+r'$d_z =5$' +"\n4 - ECPH-C-L"+r'$_1 \gamma = 5e3$'+ "\n5 - ECPH-C-L"+r'$_1 \gamma=1e4$'+ "\n6 - ECPH-C-L"+r'$_1 \gamma =1e5$'+ "\n7 - ECPH-C Gold Standard")
+        txt = matplotlib.offsetbox.TextArea("Model Type:\n0 - FA-EPH-C "+r'$d_z =2$'+ "\n1 - FA-EPH-C "+r'$d_z =3$'+ "\n2 - FA-EPH-C "+r'$d_z =4$'+ "\n3 - FA-EPH-C "+r'$d_z =5$' +"\n4 - EPH-C-L"+r'$_1 \gamma = 5e3$'+ "\n5 - EPH-C-L"+r'$_1 \gamma=1e4$'+ "\n6 - EPH-C-L"+r'$_1 \gamma =1e5$'+ "\n7 - EPH-C Gold Standard")
         box= a._legend_box
         box.get_children().append(txt)
         box.set_figure(box.figure)
@@ -2383,7 +2383,7 @@ def gather_plot_cv_cindex_sim(n_cv, analysis_directory, disease_type):
     ax.set_xlabel('model type')
     pl.xticks(range(1, mod_sel.shape[0]+1), mod_sel.index)
     if disease_type in ['SIM1', 'SIM2', 'SIM3', 'SIM4']:
-        txt = matplotlib.offsetbox.TextArea("Model Type:\n0 - FA-ECPH-C "+r'$d_z =2$'+ "\n1 - FA-ECPH-C "+r'$d_z =3$'+ "\n2 - FA-ECPH-C "+r'$d_z =4$'+ "\n3 - FA-ECPH-C "+r'$d_z =5$' + "\n4 - ECPH-C-L"+r'$_1 \gamma = 5e4$'+ "\n5 - ECPH-C-L"+r'$_1 \gamma=1e5$'+ "\n6 - ECPH-C-L"+r'$_1 \gamma =1e6$')
+        txt = matplotlib.offsetbox.TextArea("Model Type:\n0 - FA-EPH-C "+r'$d_z =2$'+ "\n1 - FA-EPH-C "+r'$d_z =3$'+ "\n2 - FA-EPH-C "+r'$d_z =4$'+ "\n3 - FA-EPH-C "+r'$d_z =5$' + "\n4 - EPH-C-L"+r'$_1 \gamma = 5e4$'+ "\n5 - EPH-C-L"+r'$_1 \gamma=1e5$'+ "\n6 - EPH-C-L"+r'$_1 \gamma =1e6$')
         box= a._legend_box
         box.get_children().append(txt)
         box.set_figure(box.figure)
