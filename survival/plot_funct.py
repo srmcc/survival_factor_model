@@ -48,6 +48,8 @@ def prettyplot(n_cv, i, survivalloc, analysis_directory, disease_type):
 	survival= survival.drop(list(testsamples.values[:,0]), axis=1)
 	EZ = pd.read_csv(analysis_directory+ zloc, sep=",", index_col=0)
 	EZ.columns=survival.columns 
+	eps= np.min(survival.ix[0, survival.iloc[0, :]!=0])
+	survival.ix[0, survival.iloc[0, :]==0]= eps/10  #replacing zero survival times with 1/10 the smallest time.
 	t= np.log(survival.iloc[0, :])
 	delta= survival.iloc[1, :]
 	x = EZ.iloc[0, :]
