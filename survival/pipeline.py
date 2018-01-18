@@ -170,6 +170,7 @@ def pipeline(root_directory, disease_type, gold_standard, plot_only=False):
 		survivalloc =data_directory+ data_guide_gs.loc[:, 'file_location'].values[-1]
 		i=0
 		n_cv=5
+		plot_funct.prettyplot(n_cv, i, survivalloc, analysis_directory, disease_type)
 		for filename in data_guide_gs.loc[:, 'file_location']:
 			gs= pd.read_csv(data_directory +filename, sep=',', index_col=0)
 			if re.search(r'age', filename) and not re.search(r'stage', filename):
