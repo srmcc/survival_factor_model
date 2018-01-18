@@ -57,6 +57,7 @@ def prettyplot(n_cv, i, survivalloc, analysis_directory, disease_type):
 	cm = plt.cm.get_cmap('winter')
 	markers = ['o', 'v']
 	vminn= np.min(t)
+	print("miminum value", vminn)
 	vmaxx=np.max(t) 
 	for k, m in enumerate(markers):
 		if m== 'o':
