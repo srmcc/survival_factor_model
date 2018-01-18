@@ -74,7 +74,7 @@ def prettyplot(n_cv, i, survivalloc, analysis_directory, disease_type):
 	fig.tight_layout()
 	# plt.savefig(analysis_directory+'cv_'+str(n_cv)+ '_results/cv_run'+str(i)+'/model_0_0/learn/expected_values/'+disease_type+ '_EZ_given_x_grey_eventtime.pdf',
 	#             bbox_inches='tight')
-	plt.savefig(disease_type+ '_EZ_given_x_color_eventtime.pdf', bbox_inches='tight')
+	plt.savefig(analysis_directory+'cv_'+str(n_cv)+ '_results/cv_run'+str(i)+'/model_0_0/learn/expected_values/'+disease_type+ '_EZ_given_x_color_eventtime.pdf', bbox_inches='tight')
 	# plt.savefig(analysis_directory+'cv_'+str(n_cv)+ '_results/cv_run'+str(i)+'/model_0_0/learn/expected_values/'+disease_type+ '_EZ_given_x_color_eventtime.pdf', bbox_inches='tight')
 	#plt.savefig(analysis_directory+'cv_'+str(n_cv)+ '_results/cv_run'+str(i)+'/model_0_0/learn/expected_values/'+disease_type+ '_EZ_given_x_grey_eventtime.eps', format='eps', dpi=1200, bbox_inches='tight')
 	# plt.savefig(analysis_directory+'cv_'+str(n_cv)+ '_results/cv_run'+str(i)+'/model_0_0/learn/expected_values/'+disease_type+ '_EZ_given_x_grey_eventtime.eps', format='eps', dpi=1200,
@@ -109,7 +109,7 @@ def prettyplot(n_cv, i, survivalloc, analysis_directory, disease_type):
 	axv.set_ylim(ylim)
 	axv.set_xlim(xlim)
 	figv.tight_layout()
-	plt.savefig(disease_type+ '_EZ_given_x_grey_eventtime.pdf', bbox_inches='tight')
+	plt.savefig(analysis_directory+'cv_'+str(n_cv)+ '_results/cv_run'+str(i)+'/model_0_0/val/expected_values/'+disease_type+ '_EZ_given_x_color_eventtime.pdf', bbox_inches='tight')
 	#plt.savefig(analysis_directory+'cv_'+str(n_cv)+ '_results/cv_run'+str(i)+'/model_0_0/val/'+ disease_type+ '_EZ_given_x_grey_eventtime.pdf', bbox_inches='tight')
 	#plt.savefig(analysis_directory+'cv_'+str(n_cv)+ '_results/cv_run'+str(i)+'/model_0_0/val/'+ disease_type+ '_EZ_given_x_grey_eventtime.eps', format='eps', dpi = 1200, bbox_inches='tight')
 
@@ -148,8 +148,8 @@ def prettyplot2(n_cv, i, survivalloc, colorvector, colorname, analysis_directory
 	# ax.set_title('Volume and percent change')
 	#ax.legend()
 	fig.tight_layout()
-	plt.savefig(analysis_directory+'cv_'+str(n_cv)+ '_results/cv_run'+str(i)+'/model_0_0/learn/expected_values/'+disease_type+'_EZ_given_x_' + colorname + '.pdf', bbox_inches='tight')
-	plt.savefig(analysis_directory+'cv_'+str(n_cv)+ '_results/cv_run'+str(i)+'/model_0_0/learn/expected_values/'+disease_type+'_EZ_given_x_' + colorname + '.eps', format='eps', dpi=1200, bbox_inches='tight')
+	plt.savefig(analysis_directory+'cv_'+str(n_cv)+ '_results/cv_run'+str(i)+'/model_0_0/learn/expected_values/'+disease_type+'_EZ_given_x_' + colorname + '_color.pdf', bbox_inches='tight')
+	plt.savefig(analysis_directory+'cv_'+str(n_cv)+ '_results/cv_run'+str(i)+'/model_0_0/learn/expected_values/'+disease_type+'_EZ_given_x_' + colorname + '_color.eps', format='eps', dpi=1200, bbox_inches='tight')
 
 def prettyplot3(n_cv, i, survivalloc, colorcat, colorname, analysis_directory, disease_type):
 	cv_testsamples= pd.read_csv(analysis_directory + 'cv_'+str(n_cv)+ '_samples_splits/cv_sample_split_' +str(i)+'.csv', sep=',', index_col=0)
@@ -228,7 +228,8 @@ def prettyplot_final(survivalloc, analysis_directory, disease_type):
 				x = EZ.iloc[z2, :]
 				y = EZ.iloc[z1, :]
 				fig, ax = plt.subplots()
-				cm = plt.cm.get_cmap('Greys')
+				#cm = plt.cm.get_cmap('Greys')
+				cm = plt.cm.get_cmap('winter')
 				markers = ['o', 'v']
 				vminn= np.min(t)
 				vmaxx=np.max(t) 
@@ -246,9 +247,9 @@ def prettyplot_final(survivalloc, analysis_directory, disease_type):
 				# ax.set_title('Volume and percent change')
 				# ax.legend()
 				fig.tight_layout()
-				plt.savefig(analysis_directory+'final_fit_results/model_0_0/learn/expected_values/'+disease_type +'_EZ_given_x_'+str(z1)+'_'+ str(z2)+ '.pdf',
+				plt.savefig(analysis_directory+'final_fit_results/model_0_0/learn/expected_values/'+disease_type +'_EZ_given_x_'+str(z1)+'_'+ str(z2)+ '_color.pdf',
 				            bbox_inches='tight')
-				plt.savefig(analysis_directory+'final_fit_results/model_0_0/learn/expected_values/'+disease_type +'_EZ_given_x_'+str(z1)+'_'+ str(z2)+ '.eps', format='eps', dpi=1200,
+				plt.savefig(analysis_directory+'final_fit_results/model_0_0/learn/expected_values/'+disease_type +'_EZ_given_x_'+str(z1)+'_'+ str(z2)+ '_color.eps', format='eps', dpi=1200,
 				            bbox_inches='tight')
 				ylim= ax.get_ylim()
 				xlim= ax.get_xlim()
@@ -279,9 +280,9 @@ def prettyplot_final(survivalloc, analysis_directory, disease_type):
 				axv.set_ylim(ylim)
 				axv.set_xlim(xlim)
 				figv.tight_layout()
-				plt.savefig(analysis_directory+'final_fit_results/model_0_0/val/'+ disease_type+ '_EZ_given_x_'+str(z1)+'_'+ str(z2)+ '.pdf',
+				plt.savefig(analysis_directory+'final_fit_results/model_0_0/val/'+ disease_type+ '_EZ_given_x_'+str(z1)+'_'+ str(z2)+ '_color.pdf',
 				            bbox_inches='tight')
-				plt.savefig(analysis_directory+'final_fit_results/model_0_0/val/'+ disease_type+ '_EZ_given_x_'+str(z1)+'_'+ str(z2)+ '.eps', format='eps', dpi=1200,
+				plt.savefig(analysis_directory+'final_fit_results/model_0_0/val/'+ disease_type+ '_EZ_given_x_'+str(z1)+'_'+ str(z2)+ '_color.eps', format='eps', dpi=1200,
 				            bbox_inches='tight')
 
 
@@ -302,7 +303,8 @@ def prettyplot3_final(survivalloc, colorcat, colorname, analysis_directory, dise
 	EZ = pd.read_csv(analysis_directory+ zloc, sep=",", index_col=0)
 	EZ.columns=survival.columns 
 	#cm = plt.cm.get_cmap('rainbow')
-	cm = plt.cm.get_cmap('Greys')
+	#cm = plt.cm.get_cmap('Greys')
+	cm = plt.cm.get_cmap('winter')
 	vminn= np.min(range(colorcat.shape[0]))-1
 	vmaxx= np.max(range(colorcat.shape[0]))
 	colorlist=matplotlib.cm.ScalarMappable(norm=matplotlib.colors.Normalize(vmin=vminn, vmax=vmaxx, clip=False), cmap=cm).to_rgba(range(colorcat.shape[0]))
@@ -341,8 +343,8 @@ def prettyplot3_final(survivalloc, colorcat, colorname, analysis_directory, dise
 				#ax.arrow(0, 0, paramt[0][1][0][0][0], paramt[0][1][0][0][1], head_width=.3, head_length=.3, fc='k', ec='k')
 				# ax.set_title('Volume and percent change')
 				fig.tight_layout()
-				plt.savefig(analysis_directory+'final_fit_results/model_0_0/learn/expected_values/'+disease_type+'_EZ_given_x_'+str(z1)+'_'+ str(z2) +'_'+ colorname + '.pdf', bbox_inches='tight')
-				plt.savefig(analysis_directory+'final_fit_results/model_0_0/learn/expected_values/'+disease_type+'_EZ_given_x_'+str(z1)+'_'+ str(z2) +'_'+ colorname + '.eps', format='eps', dpi=1200, bbox_inches='tight')
+				plt.savefig(analysis_directory+'final_fit_results/model_0_0/learn/expected_values/'+disease_type+'_EZ_given_x_'+str(z1)+'_'+ str(z2) +'_'+ colorname + '_color.pdf', bbox_inches='tight')
+				plt.savefig(analysis_directory+'final_fit_results/model_0_0/learn/expected_values/'+disease_type+'_EZ_given_x_'+str(z1)+'_'+ str(z2) +'_'+ colorname + '_color.eps', format='eps', dpi=1200, bbox_inches='tight')
 	# figLegend = pl.figure()
 	# pl.figlegend(*ax.get_legend_handles_labels(), loc = 'upper left')
 	# figLegend.savefig(analysis_directory+'final_fit_results/model_0_0/learn/expected_values/'+disease_type+'_'+ colorname + '_EZ_given_x_legend.pdf')
@@ -385,8 +387,8 @@ def prettyplot3_final(survivalloc, colorcat, colorname, analysis_directory, dise
 				#ax.arrow(0, 0, paramt[0][1][0][0][0], paramt[0][1][0][0][1], head_width=.3, head_length=.3, fc='k', ec='k')
 				# ax.set_title('Volume and percent change')
 				fig_v.tight_layout()
-				plt.savefig(analysis_directory+'final_fit_results/model_0_0/val/'+disease_type+'_EZ_given_x_'+str(z1)+'_'+ str(z2) +'_'+ colorname + '_val.pdf', bbox_inches='tight')
-				plt.savefig(analysis_directory+'final_fit_results/model_0_0/val/'+disease_type+'_EZ_given_x_'+str(z1)+'_'+ str(z2) +'_'+ colorname + '_val.eps', format='eps', dpi=1200, bbox_inches='tight')
+				plt.savefig(analysis_directory+'final_fit_results/model_0_0/val/'+disease_type+'_EZ_given_x_'+str(z1)+'_'+ str(z2) +'_'+ colorname + '_val_color.pdf', bbox_inches='tight')
+				plt.savefig(analysis_directory+'final_fit_results/model_0_0/val/'+disease_type+'_EZ_given_x_'+str(z1)+'_'+ str(z2) +'_'+ colorname + '_val_color.eps', format='eps', dpi=1200, bbox_inches='tight')
 
 
 def prettyplot3_final_sim(colorcat, colorname, root_directory, project_name, disease_type):
@@ -402,7 +404,8 @@ def prettyplot3_final_sim(colorcat, colorname, root_directory, project_name, dis
 	if np.sum(np.sum(np.isnan(colorcat)))!=0:
 		colorcat.loc['Missing']=0
 		colorcat.loc['Missing', (np.sum(np.isnan(colorcat))!=0)]=1
-	cm = plt.cm.get_cmap('Greys')
+	#cm = plt.cm.get_cmap('Greys')
+	cm = plt.cm.get_cmap('winter')
 	vminn= np.min(range(colorcat.shape[0]))-1
 	vmaxx= np.max(range(colorcat.shape[0]))
 	colorlist=matplotlib.cm.ScalarMappable(norm=matplotlib.colors.Normalize(vmin=vminn, vmax=vmaxx, clip=False), cmap=cm).to_rgba(range(colorcat.shape[0]))
@@ -441,8 +444,8 @@ def prettyplot3_final_sim(colorcat, colorname, root_directory, project_name, dis
 				#ax.arrow(0, 0, paramt[0][1][0][0][0], paramt[0][1][0][0][1], head_width=.3, head_length=.3, fc='k', ec='k')
 				# ax.set_title('Volume and percent change')
 				fig_v.tight_layout()
-				plt.savefig(analysis_directory+'final_fit_results/model_0_0/'+disease_type+ '_trueZ'+str(z1)+'_'+ str(z2) +'_'+ colorname + '_all.pdf', bbox_inches='tight')
-				plt.savefig(analysis_directory+'final_fit_results/model_0_0/'+disease_type+ '_trueZ'+str(z1)+'_'+ str(z2) +'_'+ colorname + '_all.eps', format='eps', dpi=1200, bbox_inches='tight')
+				plt.savefig(analysis_directory+'final_fit_results/model_0_0/'+disease_type+ '_trueZ'+str(z1)+'_'+ str(z2) +'_'+ colorname + '_all_color.pdf', bbox_inches='tight')
+				plt.savefig(analysis_directory+'final_fit_results/model_0_0/'+disease_type+ '_trueZ'+str(z1)+'_'+ str(z2) +'_'+ colorname + '_all_color.eps', format='eps', dpi=1200, bbox_inches='tight')
 	del ax_v, fig_v, im_v, leg_v, names_v
 	survival_v = survival.loc[:, list(testsamples.values[:,0])] 
 	survival= survival.drop(list(testsamples.values[:,0]), axis=1)
@@ -465,7 +468,8 @@ def prettyplot3_final_sim(colorcat, colorname, root_directory, project_name, dis
 	# EZ= EZ_all.ix[:, EZ.columns]
 	# EZ_v= EZ_all.ix[:, EZ_v.columns]
 	#cm = plt.cm.get_cmap('rainbow')
-	cm = plt.cm.get_cmap('Greys')
+	#cm = plt.cm.get_cmap('Greys')
+	cm = plt.cm.get_cmap('winter')
 	vminn= np.min(range(colorcat.shape[0]))-1
 	vmaxx= np.max(range(colorcat.shape[0]))
 	colorlist=matplotlib.cm.ScalarMappable(norm=matplotlib.colors.Normalize(vmin=vminn, vmax=vmaxx, clip=False), cmap=cm).to_rgba(range(colorcat.shape[0]))
@@ -506,8 +510,8 @@ def prettyplot3_final_sim(colorcat, colorname, root_directory, project_name, dis
 				#ax.arrow(0, 0, paramt[0][1][0][0][0], paramt[0][1][0][0][1], head_width=.3, head_length=.3, fc='k', ec='k')
 				# ax.set_title('Volume and percent change')
 				fig.tight_layout()
-				plt.savefig(analysis_directory+'final_fit_results/model_0_0/learn/expected_values/'+disease_type+'_EZ_given_x_'+str(z1)+'_'+ str(z2) +'_'+ colorname + '.pdf', bbox_inches='tight')
-				plt.savefig(analysis_directory+'final_fit_results/model_0_0/learn/expected_values/'+disease_type+'_EZ_given_x_'+str(z1)+'_'+ str(z2) +'_'+ colorname + '.eps', format='eps', dpi=1200, bbox_inches='tight')
+				plt.savefig(analysis_directory+'final_fit_results/model_0_0/learn/expected_values/'+disease_type+'_EZ_given_x_'+str(z1)+'_'+ str(z2) +'_'+ colorname + '_color.pdf', bbox_inches='tight')
+				plt.savefig(analysis_directory+'final_fit_results/model_0_0/learn/expected_values/'+disease_type+'_EZ_given_x_'+str(z1)+'_'+ str(z2) +'_'+ colorname + '_color.eps', format='eps', dpi=1200, bbox_inches='tight')
 	EZ_v = pd.read_csv(analysis_directory+ zloc_v, sep=",", index_col=0)
 	EZ_v.columns=survival_v.columns
 	#t= survival_v.iloc[0, :]
@@ -549,6 +553,6 @@ def prettyplot3_final_sim(colorcat, colorname, root_directory, project_name, dis
 				#ax.arrow(0, 0, paramt[0][1][0][0][0], paramt[0][1][0][0][1], head_width=.3, head_length=.3, fc='k', ec='k')
 				# ax.set_title('Volume and percent change')
 				fig_v.tight_layout()
-				plt.savefig(analysis_directory+'final_fit_results/model_0_0/val/'+disease_type+'_EZ_given_x_'+str(z1)+'_'+ str(z2) +'_'+ colorname + '_val.pdf', bbox_inches='tight')
-				plt.savefig(analysis_directory+'final_fit_results/model_0_0/val/'+disease_type+'_EZ_given_x_'+str(z1)+'_'+ str(z2) +'_'+ colorname + '_val.eps', format='eps', dpi=1200, bbox_inches='tight')
+				plt.savefig(analysis_directory+'final_fit_results/model_0_0/val/'+disease_type+'_EZ_given_x_'+str(z1)+'_'+ str(z2) +'_'+ colorname + '_val_color.pdf', bbox_inches='tight')
+				plt.savefig(analysis_directory+'final_fit_results/model_0_0/val/'+disease_type+'_EZ_given_x_'+str(z1)+'_'+ str(z2) +'_'+ colorname + '_val_color.eps', format='eps', dpi=1200, bbox_inches='tight')
 
