@@ -74,11 +74,10 @@ def prettyplot(n_cv, i, survivalloc, analysis_directory, disease_type):
 	fig.tight_layout()
 	# plt.savefig(analysis_directory+'cv_'+str(n_cv)+ '_results/cv_run'+str(i)+'/model_0_0/learn/expected_values/'+disease_type+ '_EZ_given_x_grey_eventtime.pdf',
 	#             bbox_inches='tight')
-	plt.savefig(analysis_directory+'cv_'+str(n_cv)+ '_results/cv_run'+str(i)+'/model_0_0/learn/expected_values/'+disease_type+ '_EZ_given_x_color_eventtime.pdf', bbox_inches='tight')
+	plt.savefig(analysis_directory+'cv_'+str(n_cv)+ '_results/cv_run'+str(i)+'/model_0_0/learn/expected_values/'+disease_type+ '_EZ_given_x_color.pdf', bbox_inches='tight')
 	# plt.savefig(analysis_directory+'cv_'+str(n_cv)+ '_results/cv_run'+str(i)+'/model_0_0/learn/expected_values/'+disease_type+ '_EZ_given_x_color_eventtime.pdf', bbox_inches='tight')
 	#plt.savefig(analysis_directory+'cv_'+str(n_cv)+ '_results/cv_run'+str(i)+'/model_0_0/learn/expected_values/'+disease_type+ '_EZ_given_x_grey_eventtime.eps', format='eps', dpi=1200, bbox_inches='tight')
-	# plt.savefig(analysis_directory+'cv_'+str(n_cv)+ '_results/cv_run'+str(i)+'/model_0_0/learn/expected_values/'+disease_type+ '_EZ_given_x_grey_eventtime.eps', format='eps', dpi=1200,
- #            bbox_inches='tight')
+	plt.savefig(analysis_directory+'cv_'+str(n_cv)+ '_results/cv_run'+str(i)+'/model_0_0/learn/expected_values/'+disease_type+ '_EZ_given_x_color.eps', format='eps', dpi=1200, bbox_inches='tight')
 	ylim= ax.get_ylim()
 	xlim= ax.get_xlim()
 	## now coding on the validation set. scale is set by learning set, axis are set by learning set. 
@@ -109,9 +108,9 @@ def prettyplot(n_cv, i, survivalloc, analysis_directory, disease_type):
 	axv.set_ylim(ylim)
 	axv.set_xlim(xlim)
 	figv.tight_layout()
-	plt.savefig(analysis_directory+'cv_'+str(n_cv)+ '_results/cv_run'+str(i)+'/model_0_0/val/expected_values/'+disease_type+ '_EZ_given_x_color_eventtime.pdf', bbox_inches='tight')
+	plt.savefig(analysis_directory+'cv_'+str(n_cv)+ '_results/cv_run'+str(i)+'/model_0_0/val/'+disease_type+ '_EZ_given_x_val_color.pdf', bbox_inches='tight')
 	#plt.savefig(analysis_directory+'cv_'+str(n_cv)+ '_results/cv_run'+str(i)+'/model_0_0/val/'+ disease_type+ '_EZ_given_x_grey_eventtime.pdf', bbox_inches='tight')
-	#plt.savefig(analysis_directory+'cv_'+str(n_cv)+ '_results/cv_run'+str(i)+'/model_0_0/val/'+ disease_type+ '_EZ_given_x_grey_eventtime.eps', format='eps', dpi = 1200, bbox_inches='tight')
+	plt.savefig(analysis_directory+'cv_'+str(n_cv)+ '_results/cv_run'+str(i)+'/model_0_0/val/'+ disease_type+ '_EZ_given_x_val_color.eps', format='eps', dpi = 1200, bbox_inches='tight')
 
 
 def prettyplot2(n_cv, i, survivalloc, colorvector, colorname, analysis_directory, disease_type):
