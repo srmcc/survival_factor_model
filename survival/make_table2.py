@@ -57,8 +57,8 @@ def make_table2(root_directory, gold_standard):
 					with open(root_directory + 'project_' +disease_type +'/analysis/final_fit_results_pca_cox/model_selection_output_pca_coxfinal.txt', 'r') as h:
 						Table2.loc[disease_type, "Test Set c-index"] = [np.round(eval(f.readline())[-1][0], 2), np.round(eval(g.readline())[-1][0], 2), np.round(eval(h.readline())[-1][0], 2)]
 						print(Table2.loc[disease_type, "Test Set c-index"])
-
-	print(Table2)
+	print(Table2.loc[:, "Test Set c-index"])
+	#print(Table2)
 	Table2.to_csv(root_directory + "table2.txt", sep = "&", line_terminator = "\\\n")
 
 if __name__ == '__main__':
