@@ -117,7 +117,6 @@ def pipeline(root_directory, disease_type, gold_standard, plot_only=False):
 
 		cox_funct.cross_val_pca_cox(n_cv, data_directory, analysis_directory)
 
-
 		cox_funct.cross_val_cox(n_cv, data_directory, analysis_directory, False)
 
 		if disease_type in ["LGG", "GBM", "LUAD", "LUSC"] and gold_standard == True:
@@ -167,9 +166,11 @@ def pipeline(root_directory, disease_type, gold_standard, plot_only=False):
 		for model in range(3):
 			survival_funct_v1.getsparse_cox(n_cv, analysis_directory, model)
 
-"""
+
 		## first need to make sure specs are correct.
 		## final fits:
+		cox_funct.final_fit_pca_cox(data_directory, analysis_directory)
+
 		cox_funct.final_fit_cox(data_directory, analysis_directory, False)
 		if disease_type in ["LGG", "GBM", "LUAD", "LUSC"] and gold_standard == True:
 			cox_funct.final_fit_cox(data_directory, analysis_directory, gold_standard)

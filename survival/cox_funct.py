@@ -647,6 +647,37 @@ def PCAsoln(X, dz, plotloc):
         print('hmm, you must have made a mistake.  pca dimension less than data dimension.')
 
 
+def final_fit_pca_cox(data_directory, analysis_directory):
+    gold_standard = False
+    data_guide, data, sample_name_ref = survival_funct_v1.load_data(data_directory, gold_standard)
+    data = nan_to_mean(data)
+    if os.path.isfile(analysis_directory + 'test_samples.csv'):
+        print('test samples are set aside')
+        test_samples = pd.read_csv(analysis_directory + 'test_samples.csv', delimiter=',', index_col = 0)
+    else:
+        print('test samples file missing, exiting.')
+        return
+    test_samples= list(test_samples.values[:, 0])
+    file_path = analysis_directory + 'final_fit_results_pca_cox/'
+    if not os.path.exists(file_path):
+        os.makedirs(file_path)
+    else:
+        print('directory already exists. exiting so that results are not overwritten')
+        return
+    specs_file_path = analysis_directory + 'specs_pca_cox.csv'
+    if not os.path.isfile(specs_file_path):
+        print('spec file does not exist, exiting')
+        return
+    else:
+        specs = pd.read_csv(specs_file_path, delimiter=',', index_col=0)
+        dzrange_string = specs.loc[0, 'dzrange']
+        dzrange = eval(dzrange_string.replace(';', ','))
+    dataparamX_test, dataparamt_test, CEN_test, dataparamX, dataparamt, CEN = survival_funct_v1.make_dataparamXt_final(
+        test_samples, data_guide, data,
+        file_path)
+    model_selection_fixed_data_pca_cox('final', dataparamX_test, dataparamt_test, CEN_test, dataparamX,
+               dataparamt, CEN, specs.loc[0, 'niter'], dzrange, file_path)
+    return
 
 
 
