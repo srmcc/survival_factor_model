@@ -49,8 +49,8 @@ def make_table2(root_directory, gold_standard):
 							Table2.loc[disease_type, "Test Set c-index"] = [np.round(eval(f.readline())[-1][0], 2), np.round(eval(g.readline())[-1][0], 2), np.round(eval(h.readline())[-1][0], 2), np.round(eval(i.readline())[-1][0], 2)]
 		else:
 			Table2.loc[disease_type, "Disease"] = [mod, 4+ mod_cox, 7+ mod_pca_cox]
-			Table2.loc[disease_type, "CV c-index mean"] = [means[mod], means[4+ mod_cox]]
-			Table2.loc[disease_type, "CV c-index standard deviation"] = [stdvs[mod], stdvs[4+ mod_cox], means[7+ mod_pca_cox]]
+			Table2.loc[disease_type, "CV c-index mean"] = [means[mod], means[4+ mod_cox], means[7+ mod_pca_cox]]
+			Table2.loc[disease_type, "CV c-index standard deviation"] = [stdvs[mod], stdvs[4+ mod_cox], stdvs[7+ mod_pca_cox]]
 			with open(root_directory + 'project_' +disease_type +'/analysis/final_fit_results/model_selection_output_final.txt', 'r') as f:
 				with open(root_directory + 'project_' +disease_type +'/analysis/final_fit_results_cox/model_selection_output_coxfinal.txt', 'r') as g:
 					with open(root_directory + 'project_' +disease_type +'/analysis/final_fit_results_pca_cox/model_selection_output_pca_coxfinal.txt', 'r') as h:
