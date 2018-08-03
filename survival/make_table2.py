@@ -25,7 +25,7 @@ def make_table2(root_directory, gold_standard):
 	for disease_type in ["SIM1", "SIM2", "SIM3", "SIM4"]:
 		row_names = row_names + 2* [disease_type]
 	if gold_standard== True:
-		Table2 = pd.DataFrame(np.zeros((24, 5)), columns =["Disease", "Model no.", "Test Set c-index", "CV c-index mean", "CV c-index standard deviation"], index = row_names) 
+		Table2 = pd.DataFrame(np.zeros((28, 5)), columns =["Disease", "Model no.", "Test Set c-index", "CV c-index mean", "CV c-index standard deviation"], index = row_names) 
 	else:
 		Table2 = pd.DataFrame(np.zeros((16, 5)), columns =["Disease", "Model no.", "Test Set c-index", "CV c-index mean", "CV c-index standard deviation"], index = row_names) 
 	
