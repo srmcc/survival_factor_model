@@ -43,7 +43,7 @@ def make_table2(root_directory, gold_standard):
 			Table2.loc[disease_type, "CV c-index mean"] = [means[mod], means[4+ mod_cox], means[7+ mod_pca_cox], means[11]]
 			Table2.loc[disease_type, "CV c-index standard deviation"] = [stdvs[mod], stdvs[4+ mod_cox], stdvs[7+ mod_pca_cox], stdvs[11]]
 			with open(root_directory + 'project_' +disease_type +'/analysis/final_fit_results/model_selection_output_final.txt', 'r') as f:
-				print(eval(f.readline())[-1][0])
+				print(np.round(eval(f.readline())[-1][0], 2))
 				with open(root_directory + 'project_' +disease_type +'/analysis/final_fit_results_cox/model_selection_output_coxfinal.txt', 'r') as g:
 					with open(root_directory + 'project_' +disease_type +'/analysis/final_fit_results_pca_cox/model_selection_output_pca_coxfinal.txt', 'r') as h:
 						with open(root_directory + 'project_' +disease_type +'/analysis/final_fit_results_cox_gs/model_selection_output_coxfinal.txt', 'r') as i:
