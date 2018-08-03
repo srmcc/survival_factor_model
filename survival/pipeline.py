@@ -118,7 +118,6 @@ def pipeline(root_directory, disease_type, gold_standard, plot_only=False):
 		cox_funct.cross_val_pca_cox(n_cv, data_directory, analysis_directory)
 
 
-		"""
 		cox_funct.cross_val_cox(n_cv, data_directory, analysis_directory, False)
 
 		if disease_type in ["LGG", "GBM", "LUAD", "LUSC"] and gold_standard == True:
@@ -151,6 +150,15 @@ def pipeline(root_directory, disease_type, gold_standard, plot_only=False):
 		specs.loc[0, 'sparserange'] = '[' + str(sparserange[mod_cox])+ ']'
 		specs.to_csv(analysis_directory + 'specs_cox.csv', delimiter=',', index_col=0)
 
+		mod_pca_cox = survival_funct_v1.get_best(mod_sel.iloc[7:10, :])
+		print('best pca cox mod', mod_pca_cox)
+		specs = pd.read_csv(analysis_directory + 'specs_cv.csv', delimiter=',', index_col=0) #same dimensions as fa
+		dzrange_string = specs.loc[0, 'dzrange']
+		dzrange = eval(dzrange_string.replace(';', ','))
+		specs.loc[0, 'dzrange'] = '[' + str(dzrange[mod_pca_cox])+ ']'
+		specs.to_csv(analysis_directory + 'specs_pca_cox.csv', delimiter=',', index_col=0)
+
+
 		means=np.mean(mod_sel, axis=1)
 		print(means)
 		stdvs= np.std(mod_sel, axis=1)
@@ -159,7 +167,7 @@ def pipeline(root_directory, disease_type, gold_standard, plot_only=False):
 		for model in range(3):
 			survival_funct_v1.getsparse_cox(n_cv, analysis_directory, model)
 
-
+"""
 		## first need to make sure specs are correct.
 		## final fits:
 		cox_funct.final_fit_cox(data_directory, analysis_directory, False)

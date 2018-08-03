@@ -2294,17 +2294,18 @@ def gather_plot_cv_cindex(n_cv, analysis_directory, disease_type):
         file_2 = analysis_directory + 'cv_' + str(n_cv) + '_results_cox/cv_run' + str(i) + '/model_selection_output_cox'+str(i) + '.txt'
         file_3 = analysis_directory + 'cv_' + str(n_cv) + '_results_cox_gs/cv_run' + str(i) + '/model_selection_output_cox'+str(i) + '.txt'
         # file_4 = analysis_directory + 'cv_' + str(n_cv) + '_results_2step/cv_run' + str(i) + '/model_selection_output_2step'+str(i) + '.txt'
+        file_4 = analysis_directory + 'cv_' + str(n_cv) + '_results_pca_cox/cv_run' + str(i) + '/model_selection_output_pca_cox'+str(i) + '.txt'
         f_1 = pd.read_csv(file_1, sep=',', header=None)
         f_2 = pd.read_csv(file_2, sep=',', header=None)
         f_3 = pd.read_csv(file_3, sep=',', header=None)
-        # f_4 = pd.read_csv(file_4, sep=',', header=None)
+        f_4 = pd.read_csv(file_4, sep=',', header=None)
         if i == 0:
-            # mod_sel = pd.concat([f_1.iloc[:, f_1.shape[1]-1], f_2.iloc[:, f_2.shape[1]-1], f_3.iloc[:, f_3.shape[1]-1], f_4.iloc[:, f_4.shape[1]-1]])
-            mod_sel = pd.concat([f_1.iloc[:, f_1.shape[1]-1], f_2.iloc[:, f_2.shape[1]-1], f_3.iloc[:, f_3.shape[1]-1]])
+            mod_sel = pd.concat([f_1.iloc[:, f_1.shape[1]-1], f_2.iloc[:, f_2.shape[1]-1], f_3.iloc[:, f_3.shape[1]-1], f_4.iloc[:, f_4.shape[1]-1]])
+            #mod_sel = pd.concat([f_1.iloc[:, f_1.shape[1]-1], f_2.iloc[:, f_2.shape[1]-1], f_3.iloc[:, f_3.shape[1]-1]])
             print(mod_sel.shape)
         else:
-            # mod_sel = pd.concat([mod_sel, pd.concat([f_1.iloc[:, f_1.shape[1]-1], f_2.iloc[:, f_2.shape[1]-1], f_3.iloc[:, f_3.shape[1]-1], f_4.iloc[:, f_4.shape[1]-1]])], axis=1)
-            mod_sel = pd.concat([mod_sel, pd.concat([f_1.iloc[:, f_1.shape[1]-1], f_2.iloc[:, f_2.shape[1]-1], f_3.iloc[:, f_3.shape[1]-1]])], axis=1)
+            mod_sel = pd.concat([mod_sel, pd.concat([f_1.iloc[:, f_1.shape[1]-1], f_2.iloc[:, f_2.shape[1]-1], f_3.iloc[:, f_3.shape[1]-1], f_4.iloc[:, f_4.shape[1]-1]])], axis=1)
+            #mod_sel = pd.concat([mod_sel, pd.concat([f_1.iloc[:, f_1.shape[1]-1], f_2.iloc[:, f_2.shape[1]-1], f_3.iloc[:, f_3.shape[1]-1]])], axis=1)
             print mod_sel.shape
     mod_sel.index = range(mod_sel.shape[0])
     mod_sel.columns = range(mod_sel.shape[1])
@@ -2327,17 +2328,20 @@ def gather_plot_cv_cindex(n_cv, analysis_directory, disease_type):
     ax.set_xlabel('model type')
     pl.xticks(range(1, mod_sel.shape[0]+1), mod_sel.index)
     if disease_type in ['LGG', 'LUAD']:
-        txt = matplotlib.offsetbox.TextArea("Model Type:\n0 - FA-EPH-C "+r'$d_z =2$'+ "\n1 - FA-EPH-C "+r'$d_z =3$'+ " \n2 - FA-EPH-C "+r'$d_z =4$'+ " \n3 - FA-EPH-C "+r'$d_z =5$'+ "\n4 - EPH-C-L"+r'$_1 \gamma = 1e3$'+ "\n5 - EPH-C-L"+r'$_1 \gamma=1e4$'+ "\n6 - EPH-C-L"+r'$_1 \gamma =1e5$'+ "\n7 - EPH-C Gold Standard")
+        #txt = matplotlib.offsetbox.TextArea("Model Type:\n0 - FA-EPH-C "+r'$d_z =2$'+ "\n1 - FA-EPH-C "+r'$d_z =3$'+ " \n2 - FA-EPH-C "+r'$d_z =4$'+ " \n3 - FA-EPH-C "+r'$d_z =5$'+ "\n4 - EPH-C-L"+r'$_1 \gamma = 1e3$'+ "\n5 - EPH-C-L"+r'$_1 \gamma=1e4$'+ "\n6 - EPH-C-L"+r'$_1 \gamma =1e5$'+ "\n7 - EPH-C Gold Standard")
+        txt = matplotlib.offsetbox.TextArea("Model Type:\n0 - FA-EPH-C "+r'$d_z =2$'+ "\n1 - FA-EPH-C "+r'$d_z =3$'+ " \n2 - FA-EPH-C "+r'$d_z =4$'+ " \n3 - FA-EPH-C "+r'$d_z =5$'+ "\n4 - EPH-C-L"+r'$_1 \gamma = 1e3$'+ "\n5 - EPH-C-L"+r'$_1 \gamma=1e4$'+ "\n6 - EPH-C-L"+r'$_1 \gamma =1e5$'+"\n7 - PCA-EPH-C "+r'$d_z =2$'+ "\n8 - PCA-EPH-C "+r'$d_z =3$'+ " \n9 - PCA-EPH-C "+r'$d_z =4$'+ " \n10 - PCA-EPH-C "+r'$d_z =5$'+ " \n11 - EPH-C Gold Standard")
         box= a._legend_box
         box.get_children().append(txt)
         box.set_figure(box.figure)
     if disease_type =='LUSC':
-        txt = matplotlib.offsetbox.TextArea("Model Type:\n0 - FA-EPH-C "+r'$d_z =2$'+ "\n1 - FA-EPH-C "+r'$d_z =5$'+ " \n2 - FA-EPH-C "+r'$d_z =10$'+ " \n3 - FA-EPH-C "+r'$d_z =15$'+ "\n4 - EPH-C-L"+r'$_1 \gamma = 1e3$'+ "\n5 - EPH-C-L"+r'$_1 \gamma=1e4$'+ "\n6 - EPH-C-L"+r'$_1 \gamma =1e5$'+ "\n7 - EPH-C Gold Standard")
+        #txt = matplotlib.offsetbox.TextArea("Model Type:\n0 - FA-EPH-C "+r'$d_z =2$'+ "\n1 - FA-EPH-C "+r'$d_z =5$'+ " \n2 - FA-EPH-C "+r'$d_z =10$'+ " \n3 - FA-EPH-C "+r'$d_z =15$'+ "\n4 - EPH-C-L"+r'$_1 \gamma = 1e3$'+ "\n5 - EPH-C-L"+r'$_1 \gamma=1e4$'+ "\n6 - EPH-C-L"+r'$_1 \gamma =1e5$'+ "\n7 - EPH-C Gold Standard")
+        txt = matplotlib.offsetbox.TextArea("Model Type:\n0 - FA-EPH-C "+r'$d_z =2$'+ "\n1 - FA-EPH-C "+r'$d_z =5$'+ " \n2 - FA-EPH-C "+r'$d_z =10$'+ " \n3 - FA-EPH-C "+r'$d_z =15$'+ "\n4 - EPH-C-L"+r'$_1 \gamma = 1e3$'+ "\n5 - EPH-C-L"+r'$_1 \gamma=1e4$'+ "\n6 - EPH-C-L"+r'$_1 \gamma =1e5$'+"\n7 - PCA-EPH-C "+r'$d_z =2$'+ "\n8 - PCA-EPH-C "+r'$d_z =5$'+ " \n9 - PCA-EPH-C "+r'$d_z =10$'+ " \n10 - PCA-EPH-C "+r'$d_z =15$'+ " \n11 - EPH-C Gold Standard")
         box= a._legend_box
         box.get_children().append(txt)
         box.set_figure(box.figure)
     if disease_type =='GBM':
-        txt = matplotlib.offsetbox.TextArea("Model Type:\n0 - FA-EPH-C "+r'$d_z =2$'+ "\n1 - FA-EPH-C "+r'$d_z =3$'+ "\n2 - FA-EPH-C "+r'$d_z =4$'+ "\n3 - FA-EPH-C "+r'$d_z =5$' +"\n4 - EPH-C-L"+r'$_1 \gamma = 5e3$'+ "\n5 - EPH-C-L"+r'$_1 \gamma=1e4$'+ "\n6 - EPH-C-L"+r'$_1 \gamma =1e5$'+ "\n7 - EPH-C Gold Standard")
+        txt = matplotlib.offsetbox.TextArea("Model Type:\n0 - FA-EPH-C "+r'$d_z =2$'+ "\n1 - FA-EPH-C "+r'$d_z =3$'+ " \n2 - FA-EPH-C "+r'$d_z =4$'+ " \n3 - FA-EPH-C "+r'$d_z =5$'+ "\n4 - EPH-C-L"+r'$_1 \gamma = 5e3$'+ "\n5 - EPH-C-L"+r'$_1 \gamma=1e4$'+ "\n6 - EPH-C-L"+r'$_1 \gamma =1e5$'+"\n7 - PCA-EPH-C "+r'$d_z =2$'+ "\n8 - PCA-EPH-C "+r'$d_z =3$'+ " \n9 - PCA-EPH-C "+r'$d_z =4$'+ " \n10 - PCA-EPH-C "+r'$d_z =5$'+ " \n11 - EPH-C Gold Standard")
+        #txt = matplotlib.offsetbox.TextArea("Model Type:\n0 - FA-EPH-C "+r'$d_z =2$'+ "\n1 - FA-EPH-C "+r'$d_z =3$'+ "\n2 - FA-EPH-C "+r'$d_z =4$'+ "\n3 - FA-EPH-C "+r'$d_z =5$' +"\n4 - EPH-C-L"+r'$_1 \gamma = 5e3$'+ "\n5 - EPH-C-L"+r'$_1 \gamma=1e4$'+ "\n6 - EPH-C-L"+r'$_1 \gamma =1e5$'+ "\n7 - EPH-C Gold Standard")
         box= a._legend_box
         box.get_children().append(txt)
         box.set_figure(box.figure)
