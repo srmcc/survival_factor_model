@@ -33,6 +33,13 @@ import survival_funct_v1
 import pandas as pd
 import traceback
 import sys
+import matplotlib
+#workaround for x - windows
+matplotlib.use('Agg')
+#from ggplot import *
+import pylab as pl
+import matplotlib.pyplot as plt
+
 
 
 def cox(X, tE, Delta, niter, sparse, plotloc):
