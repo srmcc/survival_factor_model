@@ -2354,17 +2354,20 @@ def gather_plot_cv_cindex_sim(n_cv, analysis_directory, disease_type):
     for i in range(n_cv):
         file_1 = analysis_directory + 'cv_' + str(n_cv) + '_results/cv_run' + str(i) + '/model_selection_output_'+str(i) + '.txt'
         file_2 = analysis_directory + 'cv_' + str(n_cv) + '_results_cox/cv_run' + str(i) + '/model_selection_output_cox'+str(i) + '.txt'
+        file_4 = analysis_directory + 'cv_' + str(n_cv) + '_results_pca_cox/cv_run' + str(i) + '/model_selection_output_pca_cox'+str(i) + '.txt'
         # file_4 = analysis_directory + 'cv_' + str(n_cv) + '_results_2step/cv_run' + str(i) + '/model_selection_output_2step'+str(i) + '.txt'
         f_1 = pd.read_csv(file_1, sep=',', header=None)
         f_2 = pd.read_csv(file_2, sep=',', header=None)
-        # f_4 = pd.read_csv(file_4, sep=',', header=None)
+        f_4 = pd.read_csv(file_4, sep=',', header=None)
         if i == 0:
-            # mod_sel = pd.concat([f_1.iloc[:, f_1.shape[1]-1], f_2.iloc[:, f_2.shape[1]-1], f_3.iloc[:, f_3.shape[1]-1], f_4.iloc[:, f_4.shape[1]-1]])
-            mod_sel = pd.concat([f_1.iloc[:, f_1.shape[1]-1], f_2.iloc[:, f_2.shape[1]-1]])
+            # mod_sel = pd.concat([f_1.iloc[:, f_1.shape[1]-1], f_2.iloc[:, f_2.shape[1]-1], f_3.iloc[:, f_3.shape[1]-1], f_4.iloc[:, f_4.shape[1]-1]])         
+            mod_sel = pd.concat([f_1.iloc[:, f_1.shape[1]-1], f_2.iloc[:, f_2.shape[1]-1], f_4.iloc[:, f_4.shape[1]-1]]) 
+            #mod_sel = pd.concat([f_1.iloc[:, f_1.shape[1]-1], f_2.iloc[:, f_2.shape[1]-1]])
             print(mod_sel.shape)
         else:
             # mod_sel = pd.concat([mod_sel, pd.concat([f_1.iloc[:, f_1.shape[1]-1], f_2.iloc[:, f_2.shape[1]-1], f_3.iloc[:, f_3.shape[1]-1], f_4.iloc[:, f_4.shape[1]-1]])], axis=1)
-            mod_sel = pd.concat([mod_sel, pd.concat([f_1.iloc[:, f_1.shape[1]-1], f_2.iloc[:, f_2.shape[1]-1]])], axis=1)
+            mod_sel = pd.concat([mod_sel, pd.concat([f_1.iloc[:, f_1.shape[1]-1], f_2.iloc[:, f_2.shape[1]-1], f_4.iloc[:, f_4.shape[1]-1]])], axis=1)            
+            #mod_sel = pd.concat([mod_sel, pd.concat([f_1.iloc[:, f_1.shape[1]-1], f_2.iloc[:, f_2.shape[1]-1]])], axis=1)
             print mod_sel.shape
     mod_sel.index = range(mod_sel.shape[0])
     mod_sel.columns = range(mod_sel.shape[1])
@@ -2387,7 +2390,8 @@ def gather_plot_cv_cindex_sim(n_cv, analysis_directory, disease_type):
     ax.set_xlabel('model type')
     pl.xticks(range(1, mod_sel.shape[0]+1), mod_sel.index)
     if disease_type in ['SIM1', 'SIM2', 'SIM3', 'SIM4']:
-        txt = matplotlib.offsetbox.TextArea("Model Type:\n0 - FA-EPH-C "+r'$d_z =2$'+ "\n1 - FA-EPH-C "+r'$d_z =3$'+ "\n2 - FA-EPH-C "+r'$d_z =4$'+ "\n3 - FA-EPH-C "+r'$d_z =5$' + "\n4 - EPH-C-L"+r'$_1 \gamma = 5e4$'+ "\n5 - EPH-C-L"+r'$_1 \gamma=1e5$'+ "\n6 - EPH-C-L"+r'$_1 \gamma =1e6$')
+        txt = matplotlib.offsetbox.TextArea("Model Type:\n0 - FA-EPH-C "+r'$d_z =2$'+ "\n1 - FA-EPH-C "+r'$d_z =3$'+ " \n2 - FA-EPH-C "+r'$d_z =4$'+ " \n3 - FA-EPH-C "+r'$d_z =5$'+ "\n4 - EPH-C-L"+r'$_1 \gamma = 5e4$'+ "\n5 - EPH-C-L"+r'$_1 \gamma=1e5$'+ "\n6 - EPH-C-L"+r'$_1 \gamma =1e6$'+"\n7 - PCA-EPH-C "+r'$d_z =2$'+ "\n8 - PCA-EPH-C "+r'$d_z =3$'+ " \n9 - PCA-EPH-C "+r'$d_z =4$'+ " \n10 - PCA-EPH-C "+r'$d_z =5$')
+        #txt = matplotlib.offsetbox.TextArea("Model Type:\n0 - FA-EPH-C "+r'$d_z =2$'+ "\n1 - FA-EPH-C "+r'$d_z =3$'+ "\n2 - FA-EPH-C "+r'$d_z =4$'+ "\n3 - FA-EPH-C "+r'$d_z =5$' + "\n4 - EPH-C-L"+r'$_1 \gamma = 5e4$'+ "\n5 - EPH-C-L"+r'$_1 \gamma=1e5$'+ "\n6 - EPH-C-L"+r'$_1 \gamma =1e6$')
         box= a._legend_box
         box.get_children().append(txt)
         box.set_figure(box.figure)
