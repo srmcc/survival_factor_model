@@ -23,7 +23,7 @@ def make_table2(root_directory, gold_standard):
 		else:
 			row_names = row_names + 3* [disease_type]
 	for disease_type in ["SIM1", "SIM2", "SIM3", "SIM4"]:
-		row_names = row_names + 2* [disease_type]
+		row_names = row_names + 3* [disease_type]
 	if gold_standard== True:
 		Table2 = pd.DataFrame(np.zeros((28, 5)), columns =["Disease", "Model no.", "Test Set c-index", "CV c-index mean", "CV c-index standard deviation"], index = row_names) 
 	else:
