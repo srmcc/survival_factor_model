@@ -113,8 +113,11 @@ def pipeline(root_directory, disease_type, gold_standard, plot_only=False):
 		os.system('cp -r ../config_files/'+ disease_type+ '/* '+ analysis_directory)
 		## put 5 spec files (or 4 if no gs), and sample splits into analysis directory.
 		n_cv=5
+		print('hello')
 
 		cox_funct.cross_val_pca_cox(n_cv, data_directory, analysis_directory)
+
+
 		"""
 		cox_funct.cross_val_cox(n_cv, data_directory, analysis_directory, False)
 
