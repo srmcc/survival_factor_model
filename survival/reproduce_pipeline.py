@@ -17,6 +17,8 @@ def call_pipeline(root_directory, disease_type, gold_standard, plot_only):
 		gold_standard = True
 	elif gold_standard =='False':
 		gold_standard = False
+	if plot_only == 'False':
+		plot_only = False
 	pipeline.pipeline(root_directory, disease_type, gold_standard, plot_only)
 
 if __name__ == '__main__':
