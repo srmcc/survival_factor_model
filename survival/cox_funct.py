@@ -578,7 +578,7 @@ def model_selection_fixed_data_pca_cox(k, dataparamX_test, dataparamt_test, CEN_
             print('exiting model selection because directory already exists')
             return
         cindex = learn_predict_cindex_pca_cox(dataparamX_test, dataparamt_test, CEN_test, dataparamX,
-                       dataparamt, CEN, niter, dz, plotloc + 'model_cox_' + str(m) + '/')
+                       dataparamt, CEN, niter, dz, plotloc + 'model_pca_cox_' + str(m) + '/')
         f.write(str(m) + ',' + str(dz) + ', ' + str(cindex) + '\n')
     f.close()
     return
@@ -613,8 +613,8 @@ def learn_predict_cindex_pca_cox(dataparamX_test, dataparamt_test, CEN_test, dat
     if not os.path.exists(plotloc + 'val_pca_cox/'):
         os.makedirs(plotloc + 'val_pca_cox/')
     nsamp_test = X_test.shape[1]
-    ## PCA "prediction" for test data.  subtract mean fit from X, then project with singular vectors from X.
-    lamdaVxT_dz_test = Ux_dz.dot(Ux_dz.T).dot(X_test- np.tile(Xmean, (nsamp_test, 1)).T)
+    ## PCA "prediction" for test data.  subtract mean fit from X, then inner product with singular vectors from X.
+    lamdaVxT_dz_test = Ux_dz.T.dot(X_test- np.tile(Xmean, (nsamp_test, 1)).T)
     pd.DataFrame(lamdaVxT_dz_test).to_csv(plotloc + 'val_pca_cox/lamdaVxT.csv')
     print("shapes", lamdaVxT_dz.shape, lamdaVxT_dz_test.shape, wtp.shape)
     est_test = expsurvtime_cox(lamdaVxT_dz_test, wtp, Lamp, plotloc + 'val_pca_cox/')
