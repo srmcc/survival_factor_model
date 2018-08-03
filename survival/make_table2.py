@@ -21,7 +21,7 @@ def make_table2(root_directory, gold_standard):
 		if gold_standard==True:
 			row_names = row_names + 4* [disease_type]
 		else:
-			row_names = row_names + 2* [disease_type]
+			row_names = row_names + 3* [disease_type]
 	for disease_type in ["SIM1", "SIM2", "SIM3", "SIM4"]:
 		row_names = row_names + 2* [disease_type]
 	if gold_standard== True:
