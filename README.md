@@ -1,6 +1,6 @@
 # Survival Factor Model
 
-This package is developed to fit an integrative latent variable model based on factor analysis and the exponential Cox proportional hazards model for survival time to address the following challenges in survival time modeling: small sample sizes, high-dimensional genomic and epigenomic covariates, and heavy, informative censoring.  Furthermore, the low-dimensional latent variables of our proposed model provide a visualization of the samples that can be used to identify heterogeneity within the sample population.  We compare the performance of our model to two alternative models.  We evaluate the model based on the predictive performance on unseen samples.
+This package is developed to fit an integrative latent variable model based on factor analysis and the exponential proportional hazards model for survival time to address the following challenges in survival time modeling: small sample sizes, high-dimensional genomic and epigenomic covariates, and heavy, informative censoring.  Furthermore, the low-dimensional latent variables of our proposed model provide a visualization of the samples that can be used to identify heterogeneity within the sample population.  We compare the performance of our model to two alternative models.  We evaluate the model based on the predictive performance on unseen samples.
 
 # Installing the dependencies
 To run this code you will need python 2.7 and the following python packages:  numpy, scipy, pandas, matplotlib, click, and sphinx (for the documentation).  

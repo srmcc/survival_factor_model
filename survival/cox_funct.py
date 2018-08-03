@@ -532,3 +532,115 @@ def final_fit_cox(data_directory, analysis_directory, gold_standard):
     return
 
 
+def cross_val_pca_cox(n_cv, data_directory, analysis_directory):
+    gold_standard = False
+    data_guide, data, sample_name_ref = survival_funct_v1.load_data(data_directory, gold_standard)
+    data = nan_to_mean(data)
+    cv_splits, test_samples = survival_funct_v1.make_splits(n_cv, analysis_directory, sample_name_ref)
+    test_samples = list(test_samples.values[:, 0])
+    file_path = analysis_directory + 'cv_' + str(n_cv) + '_results_pca_cox' + '/'
+    if not os.path.exists(file_path):
+        os.makedirs(file_path)
+    else:
+        print('directory already exists. exiting so that results are not overwritten')
+        return
+    specs_file_path = analysis_directory + 'specs_cv.csv'
+    if not os.path.isfile(specs_file_path):
+        print('spec file does not exist, exiting')
+        return
+    else:
+        specs = pd.read_csv(specs_file_path, delimiter=',', index_col=0)
+        dzrange_string = specs.loc[0, 'dzrange']
+        dzrange = eval(dzrange_string.replace(';', ','))
+    for i in range(n_cv):
+        os.makedirs(file_path + 'cv_run' + str(i) + '/')
+        dataparamX_test, dataparamt_test, CEN_test, dataparamX, dataparamt, CEN = survival_funct_v1.make_dataparamXt(
+            n_cv, cv_splits, test_samples, i, data_guide, data,
+            file_path + 'cv_run' + str(i) + '/')
+        model_selection_fixed_data_pca_cox(i, dataparamX_test, dataparamt_test, CEN_test, dataparamX,
+                   dataparamt, CEN, specs.loc[0, 'niter'], dzrange, file_path + 'cv_run' + str(i) + '/')
+    return
+
+def model_selection_fixed_data_pca_cox(k, dataparamX_test, dataparamt_test, CEN_test, dataparamX,
+                   dataparamt, CEN, niter, dzrange, plotloc): 
+    f = open(plotloc + 'model_selection_output_pca_cox' +str(k) +'.txt', 'w')
+    for m, dz in enumerate(dzrange):
+        if not os.path.exists(plotloc + 'model_pca_cox_' + str(m) + '/'):
+                os.makedirs(plotloc + 'model_pca_cox_' + str(m) + '/')
+        else:
+            print('exiting model selection because directory already exists')
+            return
+        cindex = learn_predict_cindex_pca_cox(dataparamX_test, dataparamt_test, CEN_test, dataparamX,
+                       dataparamt, CEN, niter, dz, plotloc + 'model_cox_' + str(m) + '/')
+        f.write(str(m) + ',' + str(dz) + ', ' + str(cindex) + '\n')
+    f.close()
+    return
+
+
+def learn_predict_cindex_pca_cox(dataparamX_test, dataparamt_test, CEN_test, dataparamX,
+                   dataparamt, CEN, niter, dz, plotloc):
+    """
+
+    this code takes in test data (dataparamX_test) and training data (dataparamX)
+    learns the maximum likelihood parameters
+    (the parameters in dataparamX0), predicts the expected survival time using the
+    maximum likelhood parameters, and calculates the c-index on the test data and test
+    predictions
+    """
+    X, tE, Delta = get_compiled_x_and_t(dataparamX, dataparamt, CEN)
+    Xmean=np.mean(X, axis=1)
+    ##learn
+    if not os.path.exists(plotloc + 'learn_pca_cox/'):
+        os.makedirs(plotloc + 'learn_pca_cox/')
+    Ux_dz, lamdaVxT_dz= PCAsoln(X, dz, plotloc+ 'learn_pca_cox/')
+    #learn no-L1 penalty cox model
+    sparse = [False]
+    ##check that dimension of lamdaVxT_dz is correct
+    wtp, Lamp = cox(lamdaVxT_dz, tE, Delta, niter, sparse, plotloc+ 'learn_pca_cox/')
+    print(Lamp, np.sum(wtp == 0))
+    for i, item in enumerate(wtp[0, :]):
+        if item != 0: print(i)
+    X_test, tE_test, Delta_test = get_compiled_x_and_t(
+        dataparamX_test, dataparamt_test, CEN_test)
+    #predict
+    if not os.path.exists(plotloc + 'val_pca_cox/'):
+        os.makedirs(plotloc + 'val_pca_cox/')
+    nsamp_test = X_test.shape[1]
+    ## PCA "prediction" for test data.  subtract mean fit from X, then project with singular vectors from X.
+    lamdaVxT_dz_test = Ux_dz.dot(Ux_dz.T).dot(X_test- np.tile(Xmean, (nsamp_test, 1)).T)
+    pd.DataFrame(lamdaVxT_dz_test).to_csv(plotloc + 'val_pca_cox/lamdaVxT.csv')
+    print("shapes", lamdaVxT_dz.shape, lamdaVxT_dz_test.shape, wtp.shape)
+    est_test = expsurvtime_cox(lamdaVxT_dz_test, wtp, Lamp, plotloc + 'val_pca_cox/')
+    #estdelta_test = np.ones(est_test.shape)
+    ## because no censoring on prediction.
+    ## cindex on test set
+    c_test = cindex_code.cindex_ties(tE_test, Delta_test, est_test)[0]
+    return c_test
+
+
+
+def PCAsoln(X, dz, plotloc):
+    dx, nsamp = X.shape
+    Xmean=np.mean(X, axis=1)
+    X=X-np.tile(Xmean, (nsamp, 1)).T
+    Ux, lamx, VxT = scipy.linalg.svd(X, full_matrices=False)
+    lamdaVxT_dz = np.diag(lamx[0:dz]).dot(VxT[0:dz, :])
+    if dx > dz:
+        fig, ax = plt.subplots()
+        im=ax.scatter(lamdaVxT_dz[0,:].T, lamdaVxT_dz[1,:].T , s=36, edgecolors='gray',
+                        lw = 0.5)
+        ax.set_xlabel(r'$U_0$', fontsize=20)
+        ax.set_ylabel(r'$U_1$', fontsize=20)
+        fig.tight_layout()
+        plt.savefig(plotloc + 'plot_svd.pdf', bbox_inches='tight')
+        plt.close()
+        pd.DataFrame(lamdaVxT_dz).to_csv(plotloc + 'lamdaVxT_dz.csv')
+        return Ux[:, 0:dz], lamdaVxT_dz
+    if dx <= dz:
+        print('hmm, you must have made a mistake.  pca dimension less than data dimension.')
+
+
+
+
+
+
