@@ -224,4 +224,3 @@ def pipeline(root_directory, disease_type, gold_standard, plot_only=False):
 	else:
 		n_cv=5
 		mod_sel = survival_funct_v1.gather_plot_cv_cindex_sim(n_cv, analysis_directory, disease_type)
-"""
