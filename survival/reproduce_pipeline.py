@@ -21,3 +21,4 @@ def call_pipeline(root_directory, disease_type, gold_standard, plot_only):
 
 if __name__ == '__main__':
     call_pipeline()
+    print('is this calling')
