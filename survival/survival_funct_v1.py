@@ -2292,9 +2292,9 @@ def gather_plot_cv_cindex(n_cv, analysis_directory, disease_type):
     for i in range(n_cv):
         file_1 = analysis_directory + 'cv_' + str(n_cv) + '_results/cv_run' + str(i) + '/model_selection_output_'+str(i) + '.txt'
         file_2 = analysis_directory + 'cv_' + str(n_cv) + '_results_cox/cv_run' + str(i) + '/model_selection_output_cox'+str(i) + '.txt'
-        file_3 = analysis_directory + 'cv_' + str(n_cv) + '_results_cox_gs/cv_run' + str(i) + '/model_selection_output_cox'+str(i) + '.txt'
+        file_4 = analysis_directory + 'cv_' + str(n_cv) + '_results_cox_gs/cv_run' + str(i) + '/model_selection_output_cox'+str(i) + '.txt'
         # file_4 = analysis_directory + 'cv_' + str(n_cv) + '_results_2step/cv_run' + str(i) + '/model_selection_output_2step'+str(i) + '.txt'
-        file_4 = analysis_directory + 'cv_' + str(n_cv) + '_results_pca_cox/cv_run' + str(i) + '/model_selection_output_pca_cox'+str(i) + '.txt'
+        file_3 = analysis_directory + 'cv_' + str(n_cv) + '_results_pca_cox/cv_run' + str(i) + '/model_selection_output_pca_cox'+str(i) + '.txt'
         f_1 = pd.read_csv(file_1, sep=',', header=None)
         f_2 = pd.read_csv(file_2, sep=',', header=None)
         f_3 = pd.read_csv(file_3, sep=',', header=None)
