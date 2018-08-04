@@ -59,7 +59,7 @@ def make_table2(root_directory, gold_standard):
 						print(Table2.loc[disease_type, "Test Set c-index"])
 	print(Table2.loc[:, "Test Set c-index"])
 	#print(Table2)
-	Table2.to_csv(root_directory + "table2.txt", float_format='%g', sep = "&", line_terminator = "\\ \n")
+	Table2.to_csv(root_directory + "table2.txt", float_format='%.3g', sep = "&", line_terminator = "\\ \n")
 
 if __name__ == '__main__':
     make_table2()
