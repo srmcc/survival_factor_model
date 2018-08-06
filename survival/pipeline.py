@@ -81,7 +81,7 @@ def pipeline(root_directory, disease_type, gold_standard, plot_only=False):
 		sim_type = 1
 		weibull = False
 	if disease_type == "SIM5":
-		TOP_SEED=9384598345
+		TOP_SEED=93845983
 		param_analysis_directory = root_directory + 'project_LGG/analysis/'
 		ntest=69
 		ntrain=279-69
