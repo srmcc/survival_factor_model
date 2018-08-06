@@ -191,7 +191,7 @@ def emptyparam(dx, dz, nsamp, datatype, b, sparse):
     return (datatype, theta, sparse)
 
 #simulating from the model.
-def gen_data(nsamp, dz, paramX, paramt=False, CEN=False):
+def gen_data(nsamp, dz, paramX, paramt=False, CEN=False, weibull=False):
     Zmean = np.zeros(dz)
     Zcov = np.diag(np.ones(dz))
     Z = (np.random.multivariate_normal(Zmean, Zcov, nsamp)).T
@@ -229,23 +229,34 @@ def gen_data(nsamp, dz, paramX, paramt=False, CEN=False):
     if not paramt:
         dataparamt = False
     else:
+        weibull_c=0.5
         if not CEN:
             datatype, theta, sparse = paramt
             wt, Lam = theta
-            t = np.random.exponential(1 / (Lam * np.exp(wt.dot(Z))))
+            if not weibull:
+                t = np.random.exponential(1 / (Lam * np.exp(wt.dot(Z))))
+            else:
+                t = scipy.stats.weibull_min.rvs( weibull_c, loc=0 , scale= 1 / (Lam * np.exp(wt.dot(Z))))
+                print('weibull t shape', t.shape)
             dataparamt = [t, paramt]
         elif CEN:
             [(datatypet, thetat, sparset),
              (datatypec, thetac, sparsec)] = paramt
             wt, Lam = thetat
-            t = np.random.exponential(1 / (Lam * np.exp(wt.dot(Z))))
+            if not weibull:
+                t = np.random.exponential(1 / (Lam * np.exp(wt.dot(Z))))
+            else:
+                t = scipy.stats.weibull_min.rvs(weibull_c, loc=0 ,scale= 1 / (Lam * np.exp(wt.dot(Z))))
             if datatypec == 'cind':
                 Lamc = thetac
                 c = np.random.exponential(1 / (Lamc), nsamp)
                 c = np.reshape(c, (1, nsamp))
             elif datatypec == 'cindIC':
                 wtc, Lamc = thetac
-                c = np.random.exponential(1 / (Lamc * np.exp(wtc.dot(Z))))
+                if not weibull:
+                    c = np.random.exponential(1 / (Lamc * np.exp(wtc.dot(Z))))
+                else:
+                    c = scipy.stats.weibull_min.rvs(weibull_c, loc=0 ,scale= 1 / (Lamc * np.exp(wtc.dot(Z))))
             tE = np.min(np.array([t, c]), axis=0)
             Delta = 1 * (tE == t)
             dataparamt = [[tE, (datatypet, thetat, sparset)],
@@ -2558,7 +2569,7 @@ def load_params(analysis_directory):
         CEN=False
     return(dz, paramX, paramt, CEN)
 
-def gen_data_to_csv(ntrain, ntest, dz, paramX, paramt, CEN, plotloc, frac, sim_type, SEED):
+def gen_data_to_csv(ntrain, ntest, dz, paramX, paramt, CEN, plotloc, frac, sim_type, SEED, weibull):
     if SEED!=False:
         np.random.seed(SEED)
         f = open(plotloc + 'data/not_in_use/data_generating_seed.pkl', 'w')
@@ -2651,12 +2662,17 @@ def gen_data_to_csv(ntrain, ntest, dz, paramX, paramt, CEN, plotloc, frac, sim_t
         dataparamt = False
         data_guide.dropna(axis=0, how='all', inplace=True)  
     else:
+        weibull_c =0.5
         if not CEN:
             datatype, theta, sparse = paramt
             wt, Lam = theta
             if sim_type==2 or sim_type==3:
                 wt[:-2]=0
-            t = np.random.exponential(1 / (Lam * np.exp(wt.dot(Z))))
+            if not weibull:
+                t = np.random.exponential(1 / (Lam * np.exp(wt.dot(Z))))
+            else:
+                t = scipy.stats.weibull_min.rvs( weibull_c, loc=0 , scale= 1 / (Lam * np.exp(wt.dot(Z))))
+                print('weibull t shape', t.shape)
             t=pd.DataFrame(t, columns=['sim_'+str(x) for x in range(nsamp)], index='eventtime')
             t.to_csv(plotloc+'data/t.csv', sep=',')
             data_guide.loc[i+1, 'file_location'] = 't.csv'
@@ -2672,7 +2688,10 @@ def gen_data_to_csv(ntrain, ntest, dz, paramX, paramt, CEN, plotloc, frac, sim_t
             wt, Lam = thetat
             if sim_type==2 or sim_type==3:
                 wt[:-2]=0
-            t = np.random.exponential(1 / (Lam * np.exp(wt.dot(Z))))
+            if not weibull:
+                t = np.random.exponential(1 / (Lam * np.exp(wt.dot(Z))))
+            else:
+                t = scipy.stats.weibull_min.rvs( weibull_c, loc=0 , scale= 1 / (Lam * np.exp(wt.dot(Z))))
             if datatypec == 'cind':
                 Lamc = thetac
                 c = np.random.exponential(1 / (Lamc), nsamp)
@@ -2681,7 +2700,10 @@ def gen_data_to_csv(ntrain, ntest, dz, paramX, paramt, CEN, plotloc, frac, sim_t
                 wtc, Lamc = thetac
                 if sim_type==2 or sim_type==3:
                     wtc[:-2]=0
-                c = np.random.exponential(1 / (Lamc * np.exp(wtc.dot(Z))))
+                if not weibull:
+                    c = np.random.exponential(1 / (Lamc * np.exp(wtc.dot(Z))))
+                else:
+                    c = scipy.stats.weibull_min.rvs( weibull_c, loc=0 , scale= 1 / (Lamc * np.exp(wtc.dot(Z))))
             tE = np.min(np.array([t, c]), axis=0)
             Delta = 1 * (tE == t)
             dataparamt = [[tE, (datatypet, thetat, sparset)],

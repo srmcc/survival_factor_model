@@ -22,14 +22,14 @@ def make_table2(root_directory, gold_standard):
 			row_names = row_names + 4* [disease_type]
 		else:
 			row_names = row_names + 3* [disease_type]
-	for disease_type in ["SIM1", "SIM2", "SIM3", "SIM4"]:
+	for disease_type in ["SIM1", "SIM2", "SIM3", "SIM4", "SIM5"]:
 		row_names = row_names + 3* [disease_type]
 	if gold_standard== True:
-		Table2 = pd.DataFrame(np.zeros((28, 5)), columns =["Disease", "Model no.", "Test Set c-index", "CV c-index mean", "CV c-index standard deviation"], index = row_names) 
+		Table2 = pd.DataFrame(np.zeros((31, 5)), columns =["Disease", "Model no.", "Test Set c-index", "CV c-index mean", "CV c-index standard deviation"], index = row_names) 
 	else:
 		Table2 = pd.DataFrame(np.zeros((16, 5)), columns =["Disease", "Model no.", "Test Set c-index", "CV c-index mean", "CV c-index standard deviation"], index = row_names) 
 	
-	for disease_type in ["LGG", "GBM", "LUAD", "LUSC", "SIM1", "SIM2", "SIM3", "SIM4"]:
+	for disease_type in ["LGG", "GBM", "LUAD", "LUSC", "SIM1", "SIM2", "SIM3", "SIM4", "SIM5"]:
 		mod_sel =pd.read_csv(root_directory + 'project_' +disease_type +'/analysis/model_selection.csv', index_col=[0])
 		mod=survival_funct_v1.get_best(mod_sel.iloc[0:4, :])
 		mod_cox = survival_funct_v1.get_best(mod_sel.iloc[4:7, :])

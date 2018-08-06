@@ -24,6 +24,7 @@ def pipeline(root_directory, disease_type, gold_standard, plot_only=False):
 	# disease_type = "SIM3"
 	# disease_type = "SIM4"
 	# disease_type = "SIM2"
+	# disease_type = "SIM5"
 
 	# root_directory = '/home/smccurdy/scratch/survival/survival_factor_model/'
 	project_name= "project_" + disease_type
@@ -49,6 +50,7 @@ def pipeline(root_directory, disease_type, gold_standard, plot_only=False):
 		ntrain=279-69
 		sim_frac=0
 		sim_type = 1
+		weibull = False
 
 	if disease_type == "SIM2":
 		TOP_SEED=2941402902
@@ -59,6 +61,7 @@ def pipeline(root_directory, disease_type, gold_standard, plot_only=False):
 		#sim_type = 2
 		sim_frac=0
 		sim_type = 1
+		weibull = False
 
 	if disease_type == "SIM3":
 		TOP_SEED=352522181
@@ -67,6 +70,7 @@ def pipeline(root_directory, disease_type, gold_standard, plot_only=False):
 		ntrain=71-17
 		sim_frac=0
 		sim_type = 1
+		weibull = False
 
 	if disease_type == "SIM4":
 		TOP_SEED=569377263
@@ -75,6 +79,15 @@ def pipeline(root_directory, disease_type, gold_standard, plot_only=False):
 		ntrain=279-69
 		sim_frac=0
 		sim_type = 1
+		weibull = False
+	if disease_type == "SIM5":
+		TOP_SEED=9384598345
+		param_analysis_directory = root_directory + 'project_LGG/analysis/'
+		ntest=69
+		ntrain=279-69
+		sim_frac=0
+		sim_type = 1
+		weibull = True
 
 	if not plot_only:
 		assert TOP_SEED < large
@@ -105,7 +118,7 @@ def pipeline(root_directory, disease_type, gold_standard, plot_only=False):
 			else:
 				if os.path.exists(param_analysis_directory):
 					dz, paramX, paramt, CEN=survival_funct_v1.load_params(param_analysis_directory)
-					survival_funct_v1.gen_data_to_csv(ntrain, ntest, dz, paramX, paramt, CEN, root_directory + project_name + '/', sim_frac, sim_type, MASTER_SEED_DG)
+					survival_funct_v1.gen_data_to_csv(ntrain, ntest, dz, paramX, paramt, CEN, root_directory + project_name + '/', sim_frac, sim_type, MASTER_SEED_DG, weibull)
 				else:
 					print('directory' + param_analysis_directory + 'does not exist.  need to run LGG or GBM first. quitting')
 					return
