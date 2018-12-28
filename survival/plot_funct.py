@@ -211,6 +211,65 @@ def prettyplot3(n_cv, i, survivalloc, colorcat, colorname, analysis_directory, d
 	plt.savefig(analysis_directory+'cv_'+str(n_cv)+ '_results/cv_run'+str(i)+'/model_0_0/learn/expected_values/'+disease_type+'_EZ_given_x_' + colorname + '_color.eps', format='eps', dpi=1200, bbox_inches='tight')
 
 
+def prettyplot3_pca(n_cv, i, survivalloc, colorcat, colorname, analysis_directory, disease_type):
+	cv_testsamples= pd.read_csv(analysis_directory + 'cv_'+str(n_cv)+ '_samples_splits/cv_sample_split_' +str(i)+'.csv', sep=',', index_col=0)
+	testsamples= pd.read_csv(analysis_directory + 'test_samples.csv', sep=',', index_col=0)
+	zloc = 'cv_'+str(n_cv)+ '_results_pca_cox/cv_run'+str(i)+'/model_pca_cox_0/learn_pca_cox/lamdaVxT_dz.csv'
+	survival = pd.read_csv(survivalloc, sep=",", index_col=0)
+	survival= survival.drop(list(cv_testsamples.values[:,0]), axis=1)
+	survival= survival.drop(list(testsamples.values[:,0]), axis=1)
+	colorcat = colorcat.drop(list(cv_testsamples.values[:,0]), axis=1)
+	colorcat = colorcat.drop(list(testsamples.values[:,0]), axis=1) 
+	if np.sum(np.sum(np.isnan(colorcat)))!=0:
+		colorcat.loc['Missing']=0
+		colorcat.loc['Missing', (np.sum(np.isnan(colorcat))!=0)]=1
+	EZ = pd.read_csv(analysis_directory+ zloc, sep=",", index_col=0)
+	EZ.columns=survival.columns 
+	fig, ax = plt.subplots()
+	#cm = plt.cm.get_cmap('rainbow')
+	#cm = plt.cm.get_cmap('Greys')
+	cm = plt.cm.get_cmap('winter')
+	vminn= np.min(range(colorcat.shape[0]))-1
+	vmaxx= np.max(range(colorcat.shape[0]))
+	colorlist=matplotlib.cm.ScalarMappable(norm=matplotlib.colors.Normalize(vmin=vminn, vmax=vmaxx, clip=False), cmap=cm).to_rgba(range(colorcat.shape[0]))
+	markers = ['o', 'v']
+	leg=[]
+	names=[]
+	for l in range(colorcat.shape[0]):
+		x = EZ.ix[0, colorcat.loc[:, (colorcat.iloc[l, :]==1)].columns]
+		y = EZ.ix[1, colorcat.loc[:, (colorcat.iloc[l, :]==1)].columns]
+		delta= survival.ix[1, colorcat.loc[:, (colorcat.iloc[l, :]==1)].columns]
+		for k, m in enumerate(markers):
+			if m== 'o':
+				j= (delta==1)
+			elif m=='v':
+				j= (delta==0)
+			#j= (m=='o')*(delta==1) +(m=='v')*(delta==0)
+			#j= (m=='o')&(delta==1) | (m=='v')&(delta==0)
+			if k==0:
+				im=ax.scatter(x[j], y[j], color=colorlist[l], edgecolors='black', marker=m, s=100)
+				leg.append(im)
+				names.append(colorcat.index[l]) 
+				print(k, l, colorlist[l], x[j].shape)	
+			else:
+				im=ax.scatter(x[j], y[j], color=colorlist[l], edgecolors='black', marker=m, s=100)
+				# leg.append(im)
+			# 	names.append(colorcat.index[l]) 
+			# 	print(k, l, colorlist[l], x[j].shape)
+	#fig.colorbar(im, ax=ax)
+	ax.legend(leg, names, bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
+	ax.set_xlabel(r'$U_1$', fontsize=20)
+	ax.set_ylabel(r'$U_2$', fontsize=20)
+	#ax.arrow(0, 0, paramt[0][1][0][0][0], paramt[0][1][0][0][1], head_width=.3, head_length=.3, fc='k', ec='k')
+	# ax.set_title('Volume and percent change')
+	fig.tight_layout()
+	# plt.savefig(analysis_directory+'cv_'+str(n_cv)+ '_results/cv_run'+str(i)+'/model_0_0/learn/expected_values/'+disease_type+'_EZ_given_x_' + colorname + '.pdf', bbox_inches='tight')
+	# plt.savefig(analysis_directory+'cv_'+str(n_cv)+ '_results/cv_run'+str(i)+'/model_0_0/learn/expected_values/'+disease_type+'_EZ_given_x_' + colorname + '.eps', format='eps', dpi=1200, bbox_inches='tight')
+	plt.savefig(analysis_directory+'cv_'+str(n_cv)+ '_results/cv_run'+str(i)+'/model_pca_cox_0/learn_pca_cox/'+disease_type+'_U_given_x_' + colorname + '_color.pdf', bbox_inches='tight')
+	plt.savefig(analysis_directory+'cv_'+str(n_cv)+ '_results/cv_run'+str(i)+'/model_pca_cox_0/learn_pca_cox/'+disease_type+'_U_given_x_' + colorname + '_color.eps', format='eps', dpi=1200, bbox_inches='tight')
+
+
+
 def prettyplot_final(survivalloc, analysis_directory, disease_type):
 	##potential bug later on--> i used twice.
 	#cv_testsamples= pd.read_csv(analysis_directory + 'cv_'+str(n_cv)+ '_samples_splits/cv_sample_split_' +str(i)+'.csv', sep=',', index_col=0)

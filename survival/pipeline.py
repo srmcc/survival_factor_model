@@ -14,7 +14,7 @@ def pipeline(root_directory, disease_type, gold_standard, plot_only=False):
 	# gold_standard = True
 	# gold_standard = False
 
-	# # ["LGG", "GBM", "LUAD", "LUSC", "SIM1", "SIM2", "SIM3", "SIM4"]
+	# # ["LGG", "GBM", "LUAD", "LUSC", "SIM1", "SIM2", "SIM3", "SIM4", "SIM5"]
 
 	# disease_type = "GBM"
 	# disease_type = "LGG"
@@ -207,6 +207,7 @@ def pipeline(root_directory, disease_type, gold_standard, plot_only=False):
 					plot_funct.prettyplot3(n_cv, i, survivalloc, plot_funct.make_categorical(gs.loc['cqcf_method_of_sample_procuremen', :].replace([3, 2, 1], ['Gross Total Resection', 'Subtotal Resection', 'Biopsy Only'])), 'resection', analysis_directory, disease_type)
 			if re.search(r'sub', filename):
 				plot_funct.prettyplot3(n_cv, i, survivalloc, gs, 'subtype', analysis_directory, disease_type)
+				plot_funct.prettyplot3_pca(n_cv, i, survivalloc, gs, 'subtype', analysis_directory, disease_type)
 				if disease_type =='LGG':
 					plot_funct.prettyplot3_final(survivalloc, gs, 'subtype', analysis_directory, disease_type)
 			if re.search(r'MGMT', filename):
