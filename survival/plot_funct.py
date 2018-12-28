@@ -227,8 +227,8 @@ def prettyplot3_pca(n_cv, i, survivalloc, colorcat, colorname, analysis_director
 	EZ.columns=survival.columns 
 	fig, ax = plt.subplots()
 	#cm = plt.cm.get_cmap('rainbow')
-	#cm = plt.cm.get_cmap('Greys')
-	cm = plt.cm.get_cmap('winter')
+	cm = plt.cm.get_cmap('Greys')
+	#cm = plt.cm.get_cmap('winter')
 	vminn= np.min(range(colorcat.shape[0]))-1
 	vmaxx= np.max(range(colorcat.shape[0]))
 	colorlist=matplotlib.cm.ScalarMappable(norm=matplotlib.colors.Normalize(vmin=vminn, vmax=vmaxx, clip=False), cmap=cm).to_rgba(range(colorcat.shape[0]))
