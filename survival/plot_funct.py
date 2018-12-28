@@ -265,8 +265,8 @@ def prettyplot3_pca(n_cv, i, survivalloc, colorcat, colorname, analysis_director
 	fig.tight_layout()
 	# plt.savefig(analysis_directory+'cv_'+str(n_cv)+ '_results/cv_run'+str(i)+'/model_0_0/learn/expected_values/'+disease_type+'_EZ_given_x_' + colorname + '.pdf', bbox_inches='tight')
 	# plt.savefig(analysis_directory+'cv_'+str(n_cv)+ '_results/cv_run'+str(i)+'/model_0_0/learn/expected_values/'+disease_type+'_EZ_given_x_' + colorname + '.eps', format='eps', dpi=1200, bbox_inches='tight')
-	plt.savefig(analysis_directory+'cv_'+str(n_cv)+ '_results/cv_run'+str(i)+'/model_pca_cox_0/learn_pca_cox/'+disease_type+'_U_given_x_' + colorname + '_color.pdf', bbox_inches='tight')
-	plt.savefig(analysis_directory+'cv_'+str(n_cv)+ '_results/cv_run'+str(i)+'/model_pca_cox_0/learn_pca_cox/'+disease_type+'_U_given_x_' + colorname + '_color.eps', format='eps', dpi=1200, bbox_inches='tight')
+	plt.savefig(analysis_directory+'cv_'+str(n_cv)+ '_results_pca_cox/cv_run'+str(i)+'/model_pca_cox_0/learn_pca_cox/'+disease_type+'_U_given_x_' + colorname + '_color.pdf', bbox_inches='tight')
+	plt.savefig(analysis_directory+'cv_'+str(n_cv)+ '_results_pca_cox/cv_run'+str(i)+'/model_pca_cox_0/learn_pca_cox/'+disease_type+'_U_given_x_' + colorname + '_color.eps', format='eps', dpi=1200, bbox_inches='tight')
 
 
 
