@@ -73,7 +73,8 @@ def prettyplot(n_cv, i, survivalloc, analysis_directory, disease_type):
 	ax.tick_params(axis='both', labelsize=24)
 	ax.set_xlabel(r'$E[z_1| x]$', fontsize=24)
 	ax.set_ylabel(r'$E[z_2| x]$', fontsize=24)
-	labels = [item.get_text() for item in ax.get_xticklabels()]
+	#labels = [item.get_text() for item in ax.get_xticklabels()]
+	labels = ax.get_xticklabels().tolist()
 	print(labels)
 	ax.set_xticklabels(labels, rotation='vertical')
 	#ax.arrow(0, 0, paramt[0][1][0][0][0], paramt[0][1][0][0][1], head_width=.3, head_length=.3, fc='k', ec='k')
