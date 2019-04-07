@@ -75,7 +75,6 @@ def prettyplot(n_cv, i, survivalloc, analysis_directory, disease_type):
 	ax.set_ylabel(r'$E[z_2| x]$', fontsize=24)
 	plt.draw()
 	labels = [item.get_text() for item in ax.get_xticklabels()]
-	print(labels)
 	ax.set_xticklabels(labels, rotation='vertical')
 	#ax.arrow(0, 0, paramt[0][1][0][0][0], paramt[0][1][0][0][1], head_width=.3, head_length=.3, fc='k', ec='k')
 	# ax.set_title('Volume and percent change')
@@ -113,6 +112,7 @@ def prettyplot(n_cv, i, survivalloc, analysis_directory, disease_type):
 	axv.tick_params(axis='both', labelsize=24)
 	axv.set_xlabel(r'$E[z_1| x]$', fontsize=24)
 	axv.set_ylabel(r'$E[z_2| x]$', fontsize=24)
+	plt.draw()
 	labels = [item.get_text() for item in axv.get_xticklabels()]
 	axv.set_xticklabels(labels, rotation='vertical')
 	#ax.arrow(0, 0, paramt[0][1][0][0][0], paramt[0][1][0][0][1], head_width=.3, head_length=.3, fc='k', ec='k')
@@ -158,6 +158,7 @@ def prettyplot2(n_cv, i, survivalloc, colorvector, colorname, analysis_directory
 	ax.tick_params(axis='both', labelsize=24)
 	ax.set_xlabel(r'$E[z_1| x]$', fontsize=24)
 	ax.set_xlabel(r'$E[z_2| x]$', fontsize=24)
+	plt.draw()
 	labels = [item.get_text() for item in ax.get_xticklabels()]
 	ax.set_xticklabels(labels, rotation='vertical')
 	#ax.arrow(0, 0, paramt[0][1][0][0][0], paramt[0][1][0][0][1], head_width=.3, head_length=.3, fc='k', ec='k')
@@ -217,6 +218,7 @@ def prettyplot3(n_cv, i, survivalloc, colorcat, colorname, analysis_directory, d
 	ax.tick_params(axis='both', labelsize=24)
 	ax.set_xlabel(r'$E[z_1| x]$', fontsize=24)
 	ax.set_ylabel(r'$E[z_2| x]$', fontsize=24)
+	plt.draw()
 	labels = [item.get_text() for item in ax.get_xticklabels()]
 	ax.set_xticklabels(labels, rotation='vertical')
 	#ax.arrow(0, 0, paramt[0][1][0][0][0], paramt[0][1][0][0][1], head_width=.3, head_length=.3, fc='k', ec='k')
@@ -278,6 +280,7 @@ def prettyplot3_pca(n_cv, i, survivalloc, colorcat, colorname, analysis_director
 	ax.tick_params(axis='both', labelsize=24)
 	ax.set_xlabel(r'$U_1$', fontsize=24)
 	ax.set_ylabel(r'$U_2$', fontsize=24)
+	plt.draw()
 	labels = [item.get_text() for item in ax.get_xticklabels()]
 	ax.set_xticklabels(labels, rotation='vertical')
 	#ax.arrow(0, 0, paramt[0][1][0][0][0], paramt[0][1][0][0][1], head_width=.3, head_length=.3, fc='k', ec='k')
@@ -326,6 +329,7 @@ def prettyplot_final(survivalloc, analysis_directory, disease_type):
 				ax.tick_params(axis='both', labelsize=24)
 				ax.set_xlabel(r'$E[z_%d| x]$' % (z2 +1), fontsize=24)
 				ax.set_ylabel(r'$E[z_%d| x]$' %(z1 +1), fontsize=24)
+				plt.draw()
 				labels = [item.get_text() for item in ax.get_xticklabels()]
 				ax.set_xticklabels(labels, rotation='vertical')
 				#ax.arrow(0, 0, paramt[0][1][0][0][0], paramt[0][1][0][0][1], head_width=.3, head_length=.3, fc='k', ec='k')
@@ -361,6 +365,7 @@ def prettyplot_final(survivalloc, analysis_directory, disease_type):
 				axv.tick_params(axis='both', labelsize=24)
 				axv.set_xlabel(r'$E[z_%d| x]$' %(z2 +1), fontsize=24)
 				axv.set_ylabel(r'$E[z_%d| x]$' %(z1 +1), fontsize=24)
+				plt.draw()
 				labels = [item.get_text() for item in axv.get_xticklabels()]
 				axv.set_xticklabels(labels, rotation='vertical')
 				#ax.arrow(0, 0, paramt[0][1][0][0][0], paramt[0][1][0][0][1], head_width=.3, head_length=.3, fc='k', ec='k')
@@ -430,6 +435,7 @@ def prettyplot3_final(survivalloc, colorcat, colorname, analysis_directory, dise
 				ax.tick_params(axis='both', labelsize=24)
 				ax.set_xlabel(r'$E[z_%d| x]$'%(z2 +1), fontsize=24)
 				ax.set_ylabel(r'$E[z_%d| x]$'%(z1 +1), fontsize=24)
+				plt.draw()
 				labels = [item.get_text() for item in ax.get_xticklabels()]
 				ax.set_xticklabels(labels, rotation='vertical')
 				#ax.arrow(0, 0, paramt[0][1][0][0][0], paramt[0][1][0][0][1], head_width=.3, head_length=.3, fc='k', ec='k')
@@ -477,6 +483,7 @@ def prettyplot3_final(survivalloc, colorcat, colorname, analysis_directory, dise
 				ax_v.tick_params(axis='both', labelsize=24)
 				ax_v.set_xlabel(r'$E[z_%d| x]$'%(z2 +1), fontsize=24)
 				ax_v.set_ylabel(r'$E[z_%d| x]$'%(z1 +1), fontsize=24)
+				plt.draw()
 				labels = [item.get_text() for item in ax_v.get_xticklabels()]
 				ax_v.set_xticklabels(labels, rotation='vertical')
 				#ax.arrow(0, 0, paramt[0][1][0][0][0], paramt[0][1][0][0][1], head_width=.3, head_length=.3, fc='k', ec='k')
@@ -537,6 +544,7 @@ def prettyplot3_final_sim(colorcat, colorname, root_directory, project_name, dis
 				ax_v.tick_params(axis='both', labelsize=24)
 				ax_v.set_xlabel(r'$ z_%d$'%(z2 +1), fontsize=24)
 				ax_v.set_ylabel(r'$ z_%d$'%(z1 +1), fontsize=24)
+				plt.draw()
 				labels = [item.get_text() for item in ax_v.get_xticklabels()]
 				ax_v.set_xticklabels(labels, rotation='vertical')
 				#ax.arrow(0, 0, paramt[0][1][0][0][0], paramt[0][1][0][0][1], head_width=.3, head_length=.3, fc='k', ec='k')
@@ -605,6 +613,7 @@ def prettyplot3_final_sim(colorcat, colorname, root_directory, project_name, dis
 				# ax.set_ylabel(r'$Q E[z_%d| x]$'%(z1 +1), fontsize=20)
 				ax.set_xlabel(r'$E[z_%d| x]$'%(z2 +1), fontsize=24)
 				ax.set_ylabel(r'$E[z_%d| x]$'%(z1 +1), fontsize=24)
+				plt.draw()
 				labels = [item.get_text() for item in ax.get_xticklabels()]
 				ax.set_xticklabels(labels, rotation='vertical')
 				#ax.arrow(0, 0, paramt[0][1][0][0][0], paramt[0][1][0][0][1], head_width=.3, head_length=.3, fc='k', ec='k')
@@ -649,6 +658,7 @@ def prettyplot3_final_sim(colorcat, colorname, root_directory, project_name, dis
 				ax_v.tick_params(axis='both', labelsize=24)
 				ax_v.set_xlabel(r'$E[z_%d| x]$'%(z2 +1), fontsize=24)
 				ax_v.set_ylabel(r'$E[z_%d| x]$'%(z1 +1), fontsize=24)
+				plt.draw()
 				labels = [item.get_text() for item in ax_v.get_xticklabels()]
 				ax_v.set_xticklabels(labels, rotation='vertical')
 				# ax_v.set_xlabel(r'$Q E[z_%d| x]$'%(z2 +1), fontsize=20)
