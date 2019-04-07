@@ -80,7 +80,7 @@ If you would like to perform your own analysis on your own data, here is a quick
 	mod = survival_funct_v1.get_best(mod_sel.iloc[0:n_dz, :])
 	mod_cox = survival_funct_v1.get_best(mod_sel.iloc[n_dz:(n_dz + n_cox), :])
 
-* The previous code will create a pdf and a csv file of the c-indices on the validation sets from the cross validation searches in the *analysis_directory*.  The *model_selection.csv* file contains models as rows and cross-validation group as columns.  The first *n_dz* rows are the FA-ECPH-C models.  The next *n_cox* rows are the ECPH-C-L_1 models. It will also create folders and files with additional saved output from each model fit and prediction.
+* The previous code will create a pdf and a csv file of the c-indices on the validation sets from the cross validation searches in the *analysis_directory*.  The *model_selection.csv* file contains models as rows and cross-validation group as columns.  The first *n_dz* rows are the FA-EPH-C models.  The next *n_cox* rows are the EPH-C-L_1 models. It will also create folders and files with additional saved output from each model fit and prediction.
 
 * Outside of the python terminal, make files *specs.csv* with the best latent dimension in the column *dzrange* (e.g. *[2]*) and *specs_cox.csv* with the best sparsity parameter in the column *sparserange* (e.g. *[[True, 1000]]*) and put them here::
 
@@ -97,7 +97,7 @@ If you would like to perform your own analysis on your own data, here is a quick
 	xxx/survival_factor_model/project_name/analysis/final_fit_results/model_selection_output_final.txt
 	xxx/survival_factor_model/project_name/analysis/final_fit_results_cox/model_selection_output_coxfinal.txt
 
-* Figures for the FA-ECPH-C models can be found here::
+* Figures for the FA-EPH-C models can be found here::
 
 	xxx/survival_factor_model/project_+ disease_type +/analysis/cv_5_results/cv_run0/model_0_0/learn/expected_values/
 	xxx/survival_factor_model/project_+ disease_type +/analysis/cv_5_results/cv_run0/model_0_0/val/
