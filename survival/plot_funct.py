@@ -159,7 +159,7 @@ def prettyplot2(n_cv, i, survivalloc, colorvector, colorname, analysis_directory
 	cbar.ax.tick_params(labelsize=24)
 	ax.tick_params(axis='both', labelsize=24)
 	ax.set_xlabel(r'$E[z_1| x]$', fontsize=24)
-	ax.set_xlabel(r'$E[z_2| x]$', fontsize=24)
+	ax.set_ylabel(r'$E[z_2| x]$', fontsize=24)
 	plt.draw()
 	labels = [item.get_text() for item in ax.get_xticklabels()]
 	ax.set_xticklabels(labels, rotation='vertical')
